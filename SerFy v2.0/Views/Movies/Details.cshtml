@@ -1,0 +1,67 @@
+﻿@model SerFy_v2._0.Models.Movie
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Movie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photograph)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photograph)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Trailer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Trailer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sinopse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sinopse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dataDePub)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dataDePub)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Delete", "Delete", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

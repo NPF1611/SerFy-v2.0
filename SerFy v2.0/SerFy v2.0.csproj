@@ -196,14 +196,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Actors.cs" />
+    <Compile Include="Models\Characters.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Director.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\Rate.cs" />
+    <Compile Include="Models\Writer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -216,6 +224,29 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Multimedia\Atores\0.jpg" />
+    <Content Include="Multimedia\Atores\1.jpg" />
+    <Content Include="Multimedia\Atores\2.jpg" />
+    <Content Include="Multimedia\Directores\0.jpg" />
+    <Content Include="Multimedia\Directores\1.jpg" />
+    <Content Include="Multimedia\Directores\2.jpg" />
+    <Content Include="Multimedia\Filme\0.jpg" />
+    <Content Include="Multimedia\Filme\1.jpg" />
+    <Content Include="Multimedia\Filme\2.jpg" />
+    <Content Include="Multimedia\Filme\3.jpg" />
+    <Content Include="Multimedia\Filme\4.jpg" />
+    <Content Include="Multimedia\Filme\5.jpg" />
+    <Content Include="Multimedia\Filme\Movie_12.jpg" />
+    <Content Include="Multimedia\Filme\Movie_15.jpg" />
+    <Content Include="Multimedia\Filme\Movie_7.jpg" />
+    <Content Include="Multimedia\img\black-and-white-caixa-belas-artes-cinema-65437.jpg" />
+    <Content Include="Multimedia\Personagens\0.jpg" />
+    <Content Include="Multimedia\Personagens\1.jpg" />
+    <Content Include="Multimedia\Personagens\2.jpg" />
+    <Content Include="Multimedia\Writers\0.jpg" />
+    <Content Include="Multimedia\Writers\1.jpg" />
+    <Content Include="Multimedia\Writers\2.jpg" />
+    <Content Include="Multimedia\Writers\3.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -243,9 +274,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -266,6 +294,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Movies\Create.cshtml" />
+    <Content Include="Views\Movies\Delete.cshtml" />
+    <Content Include="Views\Movies\Details.cshtml" />
+    <Content Include="Views\Movies\Edit.cshtml" />
+    <Content Include="Views\Movies\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

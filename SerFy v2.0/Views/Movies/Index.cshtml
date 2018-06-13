@@ -1,0 +1,31 @@
+﻿@model IEnumerable<SerFy_v2._0.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<button class="btn-default btn">
+    @Html.ActionLink("Create New", "Create")
+</button>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-3" style="background-color:slategray;">
+                <div class="card">
+                    <img class="img-responsive" src="~/Multimedia/Filme/@item.Photograph" onclick="location.href='@Url.Action("Details", "Movies", new { id = item.ID })'">
+                    <div class="container">
+                        <h4><b>@item.Name</b></h4>
+                        <button class="btn btn-default">@Html.ActionLink("Edit Movie", "Edit", new { id = item.ID })</button>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    </div>
+</div>
+

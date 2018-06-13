@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -20,10 +21,27 @@ namespace SerFy_v2._0.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("SerfyDbConnectionString", throwIfV1Schema: false)
         {
         }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Actors> Actors { get; set; }
+        public DbSet<Characters> Charas { get; set; }
+        public DbSet<Writer> Writers { get; set; }
+        public DbSet<Director> Directores { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Rate> Rates { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+
+            base.OnModelCreating(modelBuilder);
+        }
+
 
         public static ApplicationDbContext Create()
         {
