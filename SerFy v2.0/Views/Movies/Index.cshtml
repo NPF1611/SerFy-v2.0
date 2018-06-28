@@ -4,14 +4,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 @if (User.IsInRole("V2"))
 {
-    <button class="btn-default btn">
-        @Html.ActionLink("Create New", "Create")
+    <button class="btn-default btn" style="margin:10px 10px">
+        @Html.ActionLink("Add", "Create")
     </button>
 }
-
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
@@ -21,10 +19,6 @@
                     <img class="img-responsive" src="~/Multimedia/Filme/@item.Photograph" onclick="location.href='@Url.Action("Details", "Movies", new { id = item.ID })'">
                     <div class="container">
                         <h4><b>@item.Name</b></h4>
-                        @if (User.IsInRole("V2"))
-                        {
-                            <button class="btn btn-default">@Html.ActionLink("Edit Movie", "Edit", new { id = item.ID })</button>
-                        }
                     </div>
                 </div>
             </div>

@@ -76,12 +76,31 @@ namespace SerFy_v2._0
             utilizador.CRTime = System.DateTime.Now;
             db.Utilizadores.Add(utilizador);
 
+            // criar um utilizador 'Administrador'
+            var user2 = new ApplicationUser();
+            user2.UserName = "user@mail.pt";
+            user2.Email = "user@mail.pt";
+            string userPWD2 = "IPT123";
+            var chkUser2 = userManager.Create(user2, userPWD2);
+
+            //dados do Admin
+            utilizador1.Name = "User";
+            utilizador1.ID = 300;
+            utilizador1.UName = user.UserName;
+            utilizador1.photo = "default.jpg";
+            utilizador1.CRTime = System.DateTime.Now;
+            db.Utilizadores.Add(utilizador1);
+
 
 
             //Adicionar o Utilizador à respetiva Role-Administrador-
             if (chkUser.Succeeded)
             {
                 var result1 = userManager.AddToRole(user.Id, "Administrador");
+            }
+            if (chkUser2.Succeeded)
+            {
+                var result2 = userManager.AddToRole(user2.Id, "V2");
             }
         }
 

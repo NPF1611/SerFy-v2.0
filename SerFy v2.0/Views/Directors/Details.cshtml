@@ -4,45 +4,32 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Director</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <h4><b>Director:</b> @Model.Name</h4>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <img src="~/Multimedia/Directores/@Model.Photograph" class="img-responsive" />
+    </div>
+    <div class="col-lg-4">
+        <p><b>Biography :</b>@Model.MiniBio</p>
+        <p><b>Birthday:</b> @Model.Place_BD.ToString("dd/MM/yyyy")</p>
+        <p><b>Movie:</b></p>
+        <div class="container"></div>
+        <div class="row">
+            @foreach (var i in Model.MovieList)
+            {
+                <div class="col-lg-4" style="position: relative; text-align: center; color: black;" onclick="location.href='@Url.Action("Details", "Movies", new { id = i.ID })'">
+                    <img src="~/Multimedia/Filme/@i.Photograph" class="img-responsive" />
+                    @i.Name
+                </div>
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Photograph)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Photograph)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Place_BD)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Place_BD)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MiniBio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MiniBio)
-        </dd>
-
-    </dl>
+        </div>
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |

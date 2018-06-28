@@ -9,43 +9,22 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Photograph)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Place_BD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MiniBio)
-        </th>
-        <th></th>
-    </tr>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-3" style="background-color:slategray;">
+                <div style="height=300" width="200">
+                    <img width="100" src="~/Multimedia/Directores/@item.Photograph" onclick="location.href='@Url.Action("Details", "Directors", new { id = item.ID })'">
+                    <div class="container">
+                        <h4><b>@item.Name</b></h4>
+                        <button class="btn btn-default">@Html.ActionLink("Edit Director", "Edit", new { id = item.ID })</button>
+                    </div>
+                </div>
+            </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Photograph)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Place_BD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MiniBio)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
 
-</table>
+        }
+    </div>
+</div>
+
