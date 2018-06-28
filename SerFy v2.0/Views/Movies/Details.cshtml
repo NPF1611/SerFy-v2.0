@@ -4,64 +4,95 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <h1>@Model.Name</h1>
+            </div>
+            <div class="col-lg-2">
+                @*tirar os zeros*@
+                <h5><b>Date:</b>@Model.dataDePub</h5>
+            </div>
+            <div class="col-lg-1">
+                <h5><b>Rate:</b>@Model.Rating</h5>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="~/Multimedia/Filme/@Model.Photograph" width="325" height="500">
+            </div>
+            <div class="col-lg-8">
+                <Iframe height="500" width="900" src="@Model.Trailer" class="glyphicon-scale"></Iframe>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>@Model.sinopse</p>
+            </div>
+        </div>
+        <hr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photograph)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photograph)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Trailer)
-        </dt>
+        <h5>Actors</h5>
+        <table class="table-responsive" style="width:100%">
+            <tr>
+                <th>Name</th>
+                <th>role</th>
+            </tr>
+            @foreach (var item in Model.CharactersList)
+            {
+                <tr style="cursor:pointer">
 
-        <dd>
-            @Html.DisplayFor(model => model.Trailer)
-        </dd>
+                    <td onclick="location.href='@Url.Action("Details", "Actors", new { id = item.actor.ID })'"><img width="20" src="~/Multimedia/Atores/@item.actor.Photograph"> @item.actor.Name</td>
+                    <td onclick="location.href='@Url.Action("Details", "Characters", new { id = item.ID })'"> @item.Name</td>
+                </tr>
+            }
+        </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.sinopse)
-        </dt>
+        <hr />
+        <h5>Directors</h5>
+        <table style="width:100%">
+            <tr>
+                <th>Name</th>
+            </tr>
+            @foreach (var item in Model.DirectorList)
+            {
+                <tr style="cursor:pointer">
+                    <td onclick="location.href='@Url.Action("Details","Directors",new { id = item.ID })'"><img width="20" src="~/Multimedia/Directores/@item.Photograph"> @item.Name</td>
+                </tr>
+            }
+        </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.sinopse)
-        </dd>
+        <hr />
+        <h5>Writters</h5>
+        <table class="table-responsive" style="width:100%">
+            <tr>
+                <th>Writter</th>
+            </tr>
+            @foreach (var item in Model.DirectorList)
+            {
+                <tr style="cursor:pointer">
+                    <td onclick="location.href='@Url.Action("Details","Writers",new { id = item.ID })'"><img width="20" src="~/Multimedia/Writers/@item.Photograph"> @item.Name</td>
+                </tr>
+            }
+        </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.dataDePub)
-        </dt>
+        <hr />
 
-        <dd>
-            @Html.DisplayFor(model => model.dataDePub)
-        </dd>
+        <h6>Comments</h6>
+        <hr />
+        @foreach (var item in Model.Comments)
+        {
+            <h7>Username</h7>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
+            <p>@item.Text</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
+            <hr />
+        }
 
-    </dl>
+    </div>
+
 </div>
-<p>
-    @Html.ActionLink("Delete", "Delete", new { id = Model.ID }) |
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

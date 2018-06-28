@@ -79,6 +79,11 @@ namespace SerFy_v2._0.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public User Utilizador { get; set; }
+
+
+
     }
 
     public class ResetPasswordViewModel

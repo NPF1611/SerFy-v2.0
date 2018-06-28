@@ -26,6 +26,7 @@ namespace SerFy_v2._0.Models
             : base("SerfyDbConnectionString", throwIfV1Schema: false)
         {
         }
+        public DbSet<User> Utilizadores { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Actors> Actors { get; set; }
         public DbSet<Characters> Charas { get; set; }

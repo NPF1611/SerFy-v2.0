@@ -43,7 +43,7 @@ namespace SerFy_v2._0.Migrations
             {
                 new Models.Actors{ ID=1, Name="Robert Downey Jr.", Photograph="0.jpg", BD= new DateTime(1965,4,4), Minibio="Robert Downey Jr. has evolved into one of the most respected actors in Hollywood. With an amazing list of credits to his name, he has managed to stay new and fresh even after over four decades in the business." },
                 new Models.Actors{ ID=2, Name="Chris Hemsworth", Photograph="1.jpg", BD= new DateTime(1983,8,11), Minibio="Chris Hemsworth was born in Melbourne, Australia, to Leonie (van Os), a teacher of English, and Craig Hemsworth, a social-services counselor. " },
-                new Models.Actors{ ID=3, Name="Mark Ruffalo", Photograph="3.jpg", BD= new DateTime(1967,11,22), Minibio="Mark Ruffalo was born in Kenosha, Wisconsin, to Marie Rose (Hebert), a stylist and hairdresser, and Frank Lawrence Ruffalo, a construction painter." },
+                new Models.Actors{ ID=3, Name="Mark Ruffalo", Photograph="2.jpg", BD= new DateTime(1967,11,22), Minibio="Mark Ruffalo was born in Kenosha, Wisconsin, to Marie Rose (Hebert), a stylist and hairdresser, and Frank Lawrence Ruffalo, a construction painter." },
 
             };
             actors.ForEach(aa => context.Actors.AddOrUpdate(a => a.Name, aa));
@@ -63,28 +63,28 @@ namespace SerFy_v2._0.Migrations
             var Movie = new List<Models.Movie>
             {
                 new Models.Movie{ ID=1, dataDePub= new DateTime(2018,4,25), Name="Avengers: Infinity War", CharactersList= new List<Models.Characters>{ Characters[0],Characters[1],Characters[2]  },
-                                  DirectorList = new List<Models.Director>{ diretores[0],diretores[1] },Photograph="0.jpg", Trailer="https://www.youtube.com/watch?v=6ZfuNTqbHE8", Rating=3 , WriterList= new List<Models.Writer>{ writer[0],writer[1] },sinopse="The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe."
+                                  DirectorList = new List<Models.Director>{ diretores[0],diretores[1] },Photograph="0.jpg", Trailer="https://www.youtube.com/embed/6ZfuNTqbHE8", Rating=3 , WriterList= new List<Models.Writer>{ writer[0],writer[1] },sinopse="The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe."
                                 },
                 new Models.Movie{ ID=2, Name="The Avengers", dataDePub= new DateTime(2012,4,25), CharactersList= new List<Models.Characters>{ Characters[0],Characters[1],Characters[2]},
                                   DirectorList = new List<Models.Director>{ diretores[2] },WriterList= new List<Models.Writer>{ writer[2], writer[3] },
-                                   Photograph="1.jpg", Trailer="https://www.youtube.com/watch?v=eOrNdBpGMv8", Rating=3 ,sinopse="Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity."
+                                   Photograph="1.jpg", Trailer="https://www.youtube.com/embed/eOrNdBpGMv8", Rating=3 ,sinopse="Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity."
                                 },
                 //---------------------------------------------------------------------------------------------------------------------
                 //new Models.Movie{ ID=3, Name="Super Troopers 2", CharactersList= new List<Models.Characters>{ },
                 //                  DirectorList = new List<Models.Director>{ },
-                //                   Photograph="2.jpg", Trailer="https://www.youtube.com/watch?v=eEed-o8fVpM", Rating=3 , WriterList= new List<Models.Writer>{ },sinopse="When a border dispute arises between the U.S. and Canada, the Super Troopers are tasked with establishing a Highway Patrol station in the disputed area."
+                //                   Photograph="2.jpg", Trailer="https://www.youtube.com/embed/eEed-o8fVpM", Rating=3 , WriterList= new List<Models.Writer>{ },sinopse="When a border dispute arises between the U.S. and Canada, the Super Troopers are tasked with establishing a Highway Patrol station in the disputed area."
                 //                },
                 //new Models.Movie{ ID=4, Name="Pirates of the Caribbean: Dead Men Tell No Tales", CharactersList= new List<Models.Characters>{ },
                 //                  DirectorList = new List<Models.Director>{ },
-                //                   Photograph="3.jpg", Trailer="https://www.youtube.com/watch?v=Hgeu5rhoxxY", Rating=3 , WriterList= new List<Models.Writer>{ },sinopse="Captain Jack Sparrow searches for the trident of Poseidon while being pursued by an undead sea captain and his crew."
+                //                   Photograph="3.jpg", Trailer="https://www.youtube.com/embed/Hgeu5rhoxxY", Rating=3 , WriterList= new List<Models.Writer>{ },sinopse="Captain Jack Sparrow searches for the trident of Poseidon while being pursued by an undead sea captain and his crew."
                 //                },
                 //new Models.Movie{ ID=5, Name="PI", CharactersList= new List<Models.Characters>{ },
                 //                  DirectorList = new List<Models.Director>{ },
-                //                   Photograph="4.jpg", Trailer="https://www.youtube.com/watch?v=jo18VIoR2xU", Rating=3 , WriterList= new List<Models.Writer>{ },sinopse="A paranoid mathematician searches for a key number that will unlock the universal patterns found in nature."
+                //                   Photograph="4.jpg", Trailer="https://www.youtube.com/embed/jo18VIoR2xU", Rating=3 , WriterList= new List<Models.Writer>{ },sinopse="A paranoid mathematician searches for a key number that will unlock the universal patterns found in nature."
                 //                },
                 //new Models.Movie{ ID=6, Name="Captain America: Civil War", CharactersList= new List<Models.Characters>{ },
                 //                  DirectorList = new List<Models.Director>{ },
-                //                   Photograph="5.jpg", Trailer="https://www.youtube.com/watch?v=jo18VIoR2xU", Rating=3 , WriterList= new List<Models.Writer>{ },sinopse="Political involvement in the Avengers' activities causes a rift between Captain America and Iron Man."
+                //                   Photograph="5.jpg", Trailer="https://www.youtube.com/embed/jo18VIoR2xU", Rating=3 , WriterList= new List<Models.Writer>{ },sinopse="Political involvement in the Avengers' activities causes a rift between Captain America and Iron Man."
                 //                }
             };
             Movie.ForEach(aa => context.Movies.AddOrUpdate(a => a.Name, aa));

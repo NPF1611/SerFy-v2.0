@@ -61,7 +61,9 @@
             <p hidden>
                 @Html.EditorFor(model => model.dataDePub)
             </p>
-            <input type="date" class="form-control btn btn-default"  value="2222-02-01" name="date" />
+            <input type="date" hidden class="form-control btn btn-default" value="@Model.dataDePub" name="OlddateTime" />
+            @Html.ValidationMessageFor(model => model.dataDePub, "", new { @class = "text-danger" })
+            <input type="date" class="form-control btn btn-default" value="2222-02-01" name="date" />
             @Html.ValidationMessageFor(model => model.dataDePub, "", new { @class = "text-danger" })
         </div>
     </div>

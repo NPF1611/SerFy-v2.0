@@ -1,0 +1,17 @@
+﻿@model SerFy_v2._0.Models.Characters
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <h2>@Model.Name</h2>
+    
+    <img width="100%" src="~/Multimedia/Personagens/@Model.Photograph"/>
+
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

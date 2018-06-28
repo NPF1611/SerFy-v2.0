@@ -1,0 +1,50 @@
+﻿@model SerFy_v2._0.Models.Director
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Director</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photograph)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photograph)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Place_BD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Place_BD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MiniBio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MiniBio)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

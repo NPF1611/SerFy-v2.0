@@ -1,0 +1,52 @@
+﻿@model SerFy_v2._0.Models.Actors
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <h4> @Model.Name</h4>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <img src="~/Multimedia/Atores/@Model.Photograph" class="img-responsive" />
+    </div>
+    <div class="col-lg-4">
+        <p><b>Biography :</b>@Model.Minibio</p>
+        <p><b>Birthday:</b> @Model.BD.ToString("dd/MM/yyyy")</p>
+        <p><b>Characters:</b></p>
+        @foreach (var i in Model.CharacterList)
+        {
+            <div style="position: relative; text-align: center; color: black;" onclick="location.href='@Url.Action("Details", "Characters", new { id = i.ID })'">
+                <img src="~/Multimedia/Personagens/@i.Photograph" class="img-responsive" />
+                <p style=" position: absolute; bottom: 8px;right: 16px;">@i.Name</p>
+            </div>
+        }
+
+        <p><b>Movies:</b></p>
+        <div class="container"></div>
+        <div class="row">
+            @foreach (var item in Model.CharacterList)
+            {
+
+                foreach (var item2 in item.MoviesList)
+                {
+
+                    <div class="col-lg-4" onclick="location.href='@Url.Action("Details", "Movies", new { id = item2.ID })'">
+                        <img width="100" src="~/Multimedia/Filme/@item2.Photograph" />
+
+                    </div>
+
+                }
+
+            }
+        </div>
+    </div>
+</div>
+
+
+
+

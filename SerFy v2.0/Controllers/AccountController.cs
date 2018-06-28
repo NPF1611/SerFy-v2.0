@@ -149,6 +149,8 @@ namespace SerFy_v2._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
+             
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -156,14 +158,15 @@ namespace SerFy_v2._0.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    var Utilizador = new User { Name = model.Utilizador.Name, email = model.Email, UName = model.Utilizador.UName, photo="default.jpg"};
+                    UserManager.AddToRole(user.Id, "Utilizador");
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Movies");
                 }
                 AddErrors(result);
             }
@@ -392,7 +395,7 @@ namespace SerFy_v2._0.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Movies");
         }
 
         //
@@ -449,7 +452,7 @@ namespace SerFy_v2._0.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Movies");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

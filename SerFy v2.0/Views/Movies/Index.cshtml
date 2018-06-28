@@ -5,10 +5,12 @@
 }
 
 <h2>Index</h2>
-
-<button class="btn-default btn">
-    @Html.ActionLink("Create New", "Create")
-</button>
+@if (User.IsInRole("V2"))
+{
+    <button class="btn-default btn">
+        @Html.ActionLink("Create New", "Create")
+    </button>
+}
 
 <div class="container">
     <div class="row">
@@ -19,7 +21,10 @@
                     <img class="img-responsive" src="~/Multimedia/Filme/@item.Photograph" onclick="location.href='@Url.Action("Details", "Movies", new { id = item.ID })'">
                     <div class="container">
                         <h4><b>@item.Name</b></h4>
-                        <button class="btn btn-default">@Html.ActionLink("Edit Movie", "Edit", new { id = item.ID })</button>
+                        @if (User.IsInRole("V2"))
+                        {
+                            <button class="btn btn-default">@Html.ActionLink("Edit Movie", "Edit", new { id = item.ID })</button>
+                        }
                     </div>
                 </div>
             </div>

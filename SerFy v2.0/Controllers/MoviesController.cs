@@ -102,6 +102,8 @@ namespace SerFy_v2._0.Controllers
                 }
             }
 
+            movie.Trailer = movie.Trailer.Replace("/watch?v=", "/embed/");
+
             movie.Rating = 0;
 
             if (ModelState.IsValid)
@@ -137,7 +139,7 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Photograph,Trailer,sinopse,Rating")] Movie movie, DateTime date, HttpPostedFileBase photo)
+        public ActionResult Edit([Bind(Include = "ID,Name,Photograph,Trailer,sinopse,Rating")] Movie movie, DateTime date, HttpPostedFileBase photo,DateTime OlddateTime)
         {
 
             int NewID = movie.ID;
@@ -152,7 +154,7 @@ namespace SerFy_v2._0.Controllers
                 photo.SaveAs(pathPhoto);
             }
 
-            if (date != new DateTime(2222,02,01)) 
+            if (date != new DateTime(2222, 02, 01))
             {
                 if (date.Day > DateTime.Now.Day && date.Month >= DateTime.Now.Month && date.Year >= DateTime.Now.Year)
                 {
@@ -163,7 +165,14 @@ namespace SerFy_v2._0.Controllers
                     movie.dataDePub = date;
                 }
             }
-        
+            else {
+                movie.dataDePub = movie.dataDePub;
+
+
+            }
+
+            movie.Trailer = movie.Trailer.Replace("/watch?v=", "/embed/");
+
             if (ModelState.IsValid)
             {
                 db.Entry(movie).State = EntityState.Modified;
