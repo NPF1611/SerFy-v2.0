@@ -17,7 +17,7 @@ namespace SerFy_v2._0.Models
         [Required]
         [Display(Name = "Information")]
         public string sinopse { get; set; }
-        public DateTime? dataDePub { get; set; }
+        public DateTime dataDePub { get; set; }
         public double Rating { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }

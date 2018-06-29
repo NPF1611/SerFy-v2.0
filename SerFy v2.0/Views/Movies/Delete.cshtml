@@ -1,11 +1,12 @@
-﻿@model SerFy_v2._0.Models.Director
+﻿@model SerFy_v2._0.Models.Movie
 
 @{
     ViewBag.Title = "Delete";
 }
 
-<div class="center-block center text-center">
-    <h3>Are you sure you want to delete @Model.Name information ?</h3>
+
+<div  class="center-block center text-center">
+    <h3>Are you sure you want to delete @Model.Name ?</h3>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -16,5 +17,4 @@
                 @Html.ActionLink("I've changed my mind", "Index")
             </button>
         </div>
-    }
-</div>
+    }</div>

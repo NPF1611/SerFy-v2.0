@@ -3,102 +3,115 @@
 @{
     ViewBag.Title = "Details";
 }
+@*Coluna para user Admin*@
+<div class="container" style="margin-top:40px; margin-bottom:40px;">
+    <div class="row">
 
-<div>
-    <div class="container">
-        @*@if (User.IsInRole("V2"))
-        {*@
-            <div class="row">
-                <div class="col-lg-1">
-                    <button class="btn-default btn" style="margin:10px 10px">
-                        @Html.ActionLink("Change", "Edit", new { id = Model.ID })
-                    </button>
-                </div>
-                <div class="col-lg-1">
-                    @using (Html.BeginForm())
+        <button class="btn btn-default">@Html.ActionLink("Change", "Edit", new { id = Model.ID })</button>
+        <button class="btn btn-default btn-danger">@Html.ActionLink("Delete", "Delete", new { id = Model.ID })</button>@*Not working*@
+    </div>
+
+
+</div>
+@*fim da coluna user *@
+
+
+<div class="container" style="margin-top:40px; margin-bottom:40px;">
+    @*Referente ao Model Movie*@
+    <div class="row">
+        <div class="col-lg-4">
+            <h2>@Model.Name</h2>
+        </div>
+        <div class="col-lg-2">
+            <h5><b>Date:</b>@Model.dataDePub.ToString("dd/MM/yyyy")</h5>
+        </div>
+        <div class="col-lg-1">
+            <h5><b>Rate:</b>@Model.Rating</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <img style="object-fit:cover" class="img-rounded" src="~/Multimedia/Filme/@Model.Photograph" width="325" height="500">
+        </div>
+        <div class="col-lg-8">
+            <Iframe height="500" width="800" style="border:none; object-fit: fill" src="@Model.Trailer" class="glyphicon-scale"></Iframe>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p>@Model.sinopse</p>
+        </div>
+    </div>
+
+    <hr>
+    @*fim*@
+
+    @*Listagem dos atores*@
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-4" style="border-left: 1px solid #808080;">
+                <table width="350" class="table-striped">
+                    <tr>
+                        <h4>Actors</h4>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>role</th>
+                    </tr>
+                    @foreach (var item in Model.CharactersList)
                     {
-                        @Html.AntiForgeryToken()
-                        <input type="submit" value="Delete" class="btn btn-default btn-danger" style="margin:10px 10px" />
+                        <tr style="cursor:pointer">
+
+                            <td onclick="location.href='@Url.Action("Details", "Actors", new { id = item.actor.ID })'"><img width="20" src="~/Multimedia/Atores/@item.actor.Photograph"> @item.actor.Name</td>
+                            <td onclick="location.href='@Url.Action("Details", "Characters", new { id = item.ID })'"> @item.Name</td>
+                        </tr>
                     }
-                </div>
+                </table>
             </div>
-        
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>@Model.Name</h2>
+
+            @*Listagem dos Diretores*@
+
+            <div style="border-left: 1px solid #808080 " class="col-lg-4">
+                <table width="200" class="table-striped">
+                    <tr>
+                        <h4>Directors</h4>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                    @foreach (var item in Model.DirectorList)
+                    {
+                        <tr style="cursor:pointer">
+                            <td onclick="location.href='@Url.Action("Details","Directors",new { id = item.ID })'"><img width="20" src="~/Multimedia/Directores/@item.Photograph"> @item.Name</td>
+                        </tr>
+                    }
+                </table>
             </div>
-            <div class="col-lg-2">
-                @*tirar os zeros*@
-                <h5><b>Date:</b>@Model.dataDePub</h5>
-            </div>
-            <div class="col-lg-1">
-                <h5><b>Rate:</b>@Model.Rating</h5>
+
+            @*Listagem dos Escritores*@
+
+            <div class="col-lg-4" style="border-left: 1px solid #808080">
+                <table width="200" class="table-striped">
+
+                    <tr>
+                        <h4>Writter</h4>
+                    </tr>
+                    <tr>Name</tr>
+                    @foreach (var item in Model.WriterList)
+                    {
+                        <tr style="cursor:pointer">
+                            <td onclick="location.href='@Url.Action("Details","Writers",new { id = item.ID })'"><img width="20" src="~/Multimedia/Writers/@item.Photograph"> @item.Name</td>
+                        </tr>
+                    }
+                </table>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-4">
-                <img src="~/Multimedia/Filme/@Model.Photograph" width="325" height="500">
-            </div>
-            <div class="col-lg-8">
-                <Iframe height="500" width="900" src="@Model.Trailer" class="glyphicon-scale"></Iframe>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <p>@Model.sinopse</p>
-            </div>
-        </div>
-        <hr>
+    </div>
 
 
-
-        <h5>Actors</h5>
-        <table class="table-responsive" style="width:100%">
-            <tr>
-                <th>Name</th>
-                <th>role</th>
-            </tr>
-            @foreach (var item in Model.CharactersList)
-            {
-                <tr style="cursor:pointer">
-
-                    <td onclick="location.href='@Url.Action("Details", "Actors", new { id = item.actor.ID })'"><img width="20" src="~/Multimedia/Atores/@item.actor.Photograph"> @item.actor.Name</td>
-                    <td onclick="location.href='@Url.Action("Details", "Characters", new { id = item.ID })'"> @item.Name</td>
-                </tr>
-            }
-        </table>
-
-        <hr />
-        <h5>Directors</h5>
-        <table style="width:100%">
-            <tr>
-                <th>Name</th>
-            </tr>
-            @foreach (var item in Model.DirectorList)
-            {
-                <tr style="cursor:pointer">
-                    <td onclick="location.href='@Url.Action("Details","Directors",new { id = item.ID })'"><img width="20" src="~/Multimedia/Directores/@item.Photograph"> @item.Name</td>
-                </tr>
-            }
-        </table>
-
-        <hr />
-        <h5>Writters</h5>
-        <table class="table-responsive" style="width:100%">
-            <tr>
-                <th>Writter</th>
-            </tr>
-            @foreach (var item in Model.WriterList)
-            {
-                <tr style="cursor:pointer">
-                    <td onclick="location.href='@Url.Action("Details","Writers",new { id = item.ID })'"><img width="20" src="~/Multimedia/Writers/@item.Photograph"> @item.Name</td>
-                </tr>
-            }
-        </table>
-
-        <hr />
-
+    @*Falta criar esta merda*@
         <h6>Comments</h6>
         <hr />
         @foreach (var item in Model.Comments)
@@ -110,6 +123,5 @@
             <hr />
         }
 
-    </div>
-
+   
 </div>

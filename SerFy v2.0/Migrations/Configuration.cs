@@ -116,15 +116,15 @@ namespace SerFy_v2._0.Migrations
                                    Photograph="1.jpg", Trailer="https://www.youtube.com/embed/eOrNdBpGMv8", Rating=3 ,sinopse="Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity."
                                 },
 
-                new Models.Movie{ ID=3, Name="Super Troopers 2", CharactersList= new List<Models.Characters>{ Characters[3],Characters[4],Characters[5] },
+                new Models.Movie{ ID=3, Name="Super Troopers 2", dataDePub= new DateTime(2018,4,20), CharactersList= new List<Models.Characters>{ Characters[3],Characters[4],Characters[5] },
                                   DirectorList = new List<Models.Director>{diretores[3]},
                                    Photograph="2.jpg", Trailer="https://www.youtube.com/embed/eEed-o8fVpM", Rating=3 , WriterList= new List<Models.Writer>{ writer[4],writer[5]},sinopse="When a border dispute arises between the U.S. and Canada, the Super Troopers are tasked with establishing a Highway Patrol station in the disputed area."
                                 },
-                new Models.Movie{ ID=4, Name="Dead Men Tell No Tales", CharactersList= new List<Models.Characters>{Characters[6],Characters[7],Characters[8]},
+                new Models.Movie{ ID=4, Name="Dead Men Tell No Tales", dataDePub=new DateTime(2017,5,25), CharactersList= new List<Models.Characters>{Characters[6],Characters[7],Characters[8]},
                                   DirectorList = new List<Models.Director>{ diretores[4],diretores[5] },
                                    Photograph="3.jpg", Trailer="https://ww w.youtube.com/embed/Hgeu5rhoxxY", Rating=3 , WriterList= new List<Models.Writer>{ writer[6] },sinopse="Captain Jack Sparrow searches for the trident of Poseidon while being pursued by an undead sea captain and his crew."
                                 },
-                new Models.Movie{ ID=5, Name="PI", CharactersList= new List<Models.Characters>{Characters[9],Characters[10],Characters[11] },
+                new Models.Movie{ ID=5, Name="PI", dataDePub= new DateTime(1998,6,10), CharactersList= new List<Models.Characters>{Characters[9],Characters[10],Characters[11] },
                                   DirectorList = new List<Models.Director>{diretores[6]},
                                    Photograph="4.jpg",
                                    Trailer ="https://www.youtube.com/embed/jo18VIoR2xU",
@@ -133,7 +133,7 @@ namespace SerFy_v2._0.Migrations
                                    sinopse ="A paranoid mathematician searches for a key number that will unlock the universal patterns found in nature."
                                 },
                 
-                new Models.Movie{ ID=6, Name="Captain America: Civil War", CharactersList= new List<Models.Characters>{ Characters[12],Characters[0] },
+                new Models.Movie{ ID=6, Name="Captain America: Civil War",dataDePub= new DateTime(2016,4,28),CharactersList= new List<Models.Characters>{ Characters[12],Characters[0] },
                                   DirectorList = new List<Models.Director>{ diretores[0], diretores[1] },
                                    Photograph="5.jpg", Trailer="https://www.youtube.com/embed/dKrVegVI0Us", Rating=3 , WriterList= new List<Models.Writer>{writer[0],writer[1] },sinopse="Political involvement in the Avengers' activities causes a rift between Captain America and Iron Man."
                                 }

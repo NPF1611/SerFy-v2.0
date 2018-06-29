@@ -4,48 +4,25 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<button class="btn-default btn" style="margin-top:20px">
+    @Html.ActionLink("Add a new Writer", "Create")
+</button>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Photograph)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Place_DB)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MiniBio)
-        </th>
-        <th></th>
-    </tr>
+<div class="container" style="margin-top:20px">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-3">
+                <div class="card">
+                    <img style="object-fit:cover; cursor:pointer;" class=" img-rounded" height="300" width="200" src="~/Multimedia/Writers/@item.Photograph" onclick="location.href='@Url.Action("Details", "Writers", new { id = item.ID })'">
+                    <div class="container">
+                        <h4><b>@item.Name</b></h4>
+                    </div>
+                </div>
+            </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Photograph)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Place_DB)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MiniBio)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
 
-</table>
+        }
+    </div>
+</div>
+
