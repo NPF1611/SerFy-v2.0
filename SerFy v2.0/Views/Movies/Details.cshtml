@@ -23,7 +23,7 @@
             <h2>@Model.Name</h2>
         </div>
         <div class="col-lg-2">
-            <h5><b>Date:</b>@Model.dataDePub.ToString("dd/MM/yyyy")</h5>
+            <h5><b>Release Date:</b>@Model.dataDePub.ToString("dd/MM/yyyy")</h5>
         </div>
         <div class="col-lg-1">
             <h5><b>Rate:</b>@Model.Rating</h5>
@@ -35,7 +35,7 @@
             <img style="object-fit:cover" class="img-rounded" src="~/Multimedia/Filme/@Model.Photograph" width="325" height="500">
         </div>
         <div class="col-lg-8">
-            <Iframe height="500" width="800" style="border:none; object-fit: fill" src="@Model.Trailer" class="glyphicon-scale"></Iframe>
+            <Iframe height="500" width="800" style="object-fit: fill ; border-radius: 5px; border:solid; overflow: hidden;" src="@Model.Trailer"></Iframe>
         </div>
     </div>
 
