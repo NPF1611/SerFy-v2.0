@@ -1,4 +1,4 @@
-﻿@model SerFy_v2._0.Models.Movie
+﻿@model SerFy_v2._0.Models.ViewModelCreateFilmePerso
 
 @{
     ViewBag.Title = "Create";
@@ -10,7 +10,7 @@
 @using (Html.BeginForm("Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Movie</h4>
         <hr />
@@ -26,7 +26,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Photograph, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control btn-default" type="file" name="photo"/>
+                <input class="form-control btn-default" type="file" name="photo" />
                 @Html.ValidationMessageFor(model => model.Photograph, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -55,6 +55,29 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.LabelFor(model => model.idsCharacters)
+                @Html.Partial("ListadePersonagens", Model)
+
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+                @Html.LabelFor(model => model.idsDirectores)
+                @Html.Partial("ListDirectors", Model)
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+                @Html.LabelFor(model => model.idsWriters)
+                @Html.Partial("ListWriters", Model)
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

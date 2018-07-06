@@ -40,15 +40,31 @@ namespace SerFy_v2._0.Controllers
         // GET: Movies/Create
         public ActionResult Create()
         {
-            return View();
+            var ch = db.Charas.ToList();
+            var model = new ViewModelCreateFilmePerso();
+            model.idsCharacters = new int[db.Charas.Count()];
+            model.Listcharacters = ch;
+
+            var dr = db.Directores.ToList();
+            model.idsCharacters = new int[db.Directores.Count()];
+            model.ListDirectors = dr;
+
+            var wr = db.Writers.ToList();
+            model.idsWriters = new int[db.Writers.Count()];
+            model.ListWriters = wr;
+
+            return View(model);
         }
         // POST: Movies/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Photograph,Trailer,sinopse,Rating")] Movie movie, HttpPostedFileBase photo, DateTime date)
+        public ActionResult Create(ViewModelCreateFilmePerso movie, HttpPostedFileBase photo, DateTime date)
         {
+            //criar um filme
+            Movie newmovie = new Movie();
+            //define the movie ID
             int newID;
             if (db.Movies.Count() == 0)
             {
@@ -60,6 +76,9 @@ namespace SerFy_v2._0.Controllers
                 newID = db.Movies.Max(a => a.ID) + 1;
             }
 
+            newmovie.ID = newID;
+
+            //define the photo path
             string photoName = "MoviePhoto" + newID;
             string pathPhoto = "";
 
@@ -73,7 +92,7 @@ namespace SerFy_v2._0.Controllers
                 if (photo.ContentType == "image/jpeg")
                 {
                     photoName = photoName + ".jpg";
-                    movie.Photograph = photoName;
+                    newmovie.Photograph = photoName;
                     pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Filme/"), photoName);
                     //Image image = new Bitmap(photo, 300, 800 ); 
 
@@ -84,7 +103,7 @@ namespace SerFy_v2._0.Controllers
                 }
 
             }
-
+            //define the date
             if (date == null)
             {
                 ModelState.AddModelError("", "no date defined");
@@ -98,17 +117,53 @@ namespace SerFy_v2._0.Controllers
                 }
                 else
                 {
-                    movie.dataDePub = date;
+                    newmovie.dataDePub = date;
                 }
             }
+            //change the trailer
+            newmovie.Trailer = movie.Trailer.Replace("/watch?v=", "/embed/");
 
-            movie.Trailer = movie.Trailer.Replace("/watch?v=", "/embed/");
+            //define movie rating
+            newmovie.Rating = 0;
 
-            movie.Rating = 0;
+            newmovie.CharactersList = new List<Characters> { };
+
+            foreach (var ch in movie.idsCharacters.ToList())
+            {
+                Characters charac = db.Charas.Find(ch);
+
+                newmovie.CharactersList.Add(charac);
+            }
+
+            newmovie.DirectorList = new List<Director> { };
+
+            foreach (var ch in movie.idsDirectores.ToList())
+            {
+                Director dir = db.Directores.Find(ch);
+
+                newmovie.DirectorList.Add(dir);
+            }
+
+            newmovie.WriterList = new List<Writer> { };
+
+            foreach (var ch in movie.idsWriters.ToList())
+            {
+                Writer writer = db.Writers.Find(ch);
+
+
+                newmovie.WriterList.Add(writer);
+            }
+
+            newmovie.Comments = new List<Comment> { };
+            newmovie.Rates = new List<Rate> { };
+            newmovie.sinopse = movie.sinopse;
+
+            newmovie.Name = movie.Name;
+
 
             if (ModelState.IsValid)
             {
-                db.Movies.Add(movie);
+                db.Movies.Add(newmovie);
                 db.SaveChanges();
                 photo.SaveAs(pathPhoto);
                 return RedirectToAction("Index");
@@ -139,14 +194,15 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Photograph,Trailer,sinopse,Rating")] Movie movie, DateTime date, HttpPostedFileBase photo,DateTime OlddateTime)
+        public ActionResult Edit([Bind(Include = "ID,Name,Photograph,Trailer,sinopse,Rating")] Movie movie, DateTime date, HttpPostedFileBase photo, DateTime OlddateTime)
         {
 
             int NewID = movie.ID;
             string photoName = "";
             string pathPhoto = "";
 
-            if (photo != null) {
+            if (photo != null)
+            {
                 photoName = "MoviePhoto" + movie.ID + ".jpg";
                 pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Filme/"), photoName);
                 System.IO.File.Delete(pathPhoto);
@@ -165,7 +221,8 @@ namespace SerFy_v2._0.Controllers
                     movie.dataDePub = date;
                 }
             }
-            else {
+            else
+            {
                 movie.dataDePub = movie.dataDePub;
 
 
@@ -203,10 +260,54 @@ namespace SerFy_v2._0.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Movie movie = db.Movies.Find(id);
+
+            movie.CharactersList = new List<Characters> { };
+            foreach (var ch in movie.CharactersList.ToList()) {
+                movie.CharactersList.Remove(ch);
+            }
+
+            movie.DirectorList = new List<Director> { };
+            foreach (var dr in movie.DirectorList.ToList())
+            {
+                movie.DirectorList.Remove(dr);
+            }
+
+            movie.WriterList = new List<Writer> { };
+            foreach (var wr in movie.WriterList.ToList())
+            {
+                movie.WriterList.Remove(wr);
+            }
+
             db.Movies.Remove(movie);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        // GET: Movies/Delete/Characters
+        public ActionResult ListadePersonagens()
+        {
+
+            return PartialView(db.Charas.ToList());
+
+        }
+
+        // GET: Movies/Atores
+        public ActionResult ListDirectors()
+        {
+
+            return PartialView(db.Directores.ToList());
+
+        }
+        // GET: Movies/Atores
+        public ActionResult ListWriters()
+        {
+
+            return PartialView(db.Writers.ToList());
+
+        }
+
+
+
 
         protected override void Dispose(bool disposing)
         {

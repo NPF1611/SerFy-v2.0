@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -10,7 +11,11 @@ namespace SerFy_v2._0.Models
         public int ID { get; set; }
         public string Text { get; set; }
 
+        [ForeignKey("Movie")]
+        public int MovieFK { get; set; }
         public virtual Movie Movie { get; set; }
+        [ForeignKey("User")]
+        public int UserFK { get; set; }
         public virtual User User { get; set; }
     }
 }

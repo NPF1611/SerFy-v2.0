@@ -1,0 +1,32 @@
+﻿@model SerFy_v2._0.Models.ViewModelCreateFilmePerso
+
+@{
+    ViewBag.Title = "ListadePersonagens";
+}
+
+<div class="container">
+    <div class="row">
+
+        @foreach (var personagem in Model.Listcharacters)
+        {
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+            <label>
+                @if (Model.idsCharacters.Contains(personagem.ID))
+                {
+                    <input type="checkbox" name="@Html.NameFor(c=>c.idsCharacters)" checked value="@personagem.ID" />
+
+                }
+                else
+                {
+                    <input type="checkbox" name="@Html.NameFor(c=>c.idsCharacters)" value="@personagem.ID" />
+
+                }
+                @personagem.Name
+            </label>
+        </div>
+        }
+    </div>
+
+
+
+</div>

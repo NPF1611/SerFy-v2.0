@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +17,7 @@ namespace SerFy_v2._0.Models
 
 
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Rate>  Rate { get; set; }
+
+        public virtual ICollection<Rate> Rate { get; set; }
     }
 }

@@ -5,16 +5,19 @@
 }
 
 
-<div  class="center-block center text-center">
+<div class="center-block center text-center">
     <h3>Are you sure you want to delete @Model.Name ?</h3>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
 
+    @using (Html.BeginForm("Delete", "Movies", FormMethod.Post))
+    {
+
+        @Html.AntiForgeryToken()
+        
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger btn-default" />
             <button class="btn btn-default">
                 @Html.ActionLink("I've changed my mind", "Index")
             </button>
         </div>
-    }</div>
+    }
+</div>

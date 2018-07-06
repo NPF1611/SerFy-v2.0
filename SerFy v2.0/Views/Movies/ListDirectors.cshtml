@@ -1,0 +1,31 @@
+﻿@model SerFy_v2._0.Models.ViewModelCreateFilmePerso
+
+@{
+    ViewBag.Title = "ListDirectors";
+}
+<div class="container">
+    <div class="row">
+
+        @foreach (var Directors in Model.ListDirectors)
+        {
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                <label>
+                    @if (Model.idsCharacters.Contains(Directors.ID))
+                    {
+                        <input type="checkbox" name="@Html.NameFor(c=>c.idsDirectores)" checked value="@Directors.ID" />
+
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="@Html.NameFor(c=>c.idsDirectores)" value="@Directors.ID" />
+
+                    }
+                    @Directors.Name
+                </label>
+            </div>
+        }
+    </div>
+
+
+
+</div>

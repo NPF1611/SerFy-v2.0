@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorsController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\DirectorsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModelCreateFilmePerso.cs" />
     <Compile Include="Models\Writer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -349,6 +351,15 @@
     <Content Include="Views\Writers\Edit.cshtml" />
     <Content Include="Views\Writers\Index.cshtml" />
     <Content Include="Views\Movies\Delete.cshtml" />
+    <Content Include="Views\Movies\ListadePersonagens.cshtml" />
+    <Content Include="Views\Movies\_CommentsForm.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Movies\ListDirectors.cshtml" />
+    <Content Include="Views\Movies\ListWriters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

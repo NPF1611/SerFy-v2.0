@@ -8,7 +8,7 @@
     <div class="row">
 
         <button class="btn btn-default">@Html.ActionLink("Change", "Edit", new { id = Model.ID })</button>
-        <button class="btn btn-default btn-danger">@Html.ActionLink("Delete", "Delete", new { id = Model.ID })</button>@*Not working*@
+        <button class="btn btn-default btn-danger">@Html.ActionLink("Delete","Delete",new  { id = Model.ID})</button>@*Not working*@
     </div>
 
 
@@ -110,18 +110,28 @@
         </div>
     </div>
 
-
     @*Falta criar esta merda*@
-        <h6>Comments</h6>
-        <hr />
+    <h4>Comments</h4>
+    <hr />
+    <div style="margin-left:20px;">
         @foreach (var item in Model.Comments)
         {
-            <h7>Username</h7>
+            <div class="row">
 
-            <p>@item.Text</p>
-
+                <div class="col-lg-2">
+                    <p>User: @Html.DisplayFor(u => item.User.Name)</p>
+                </div>
+                <div class="col-lg-3">
+                    <p>@Html.DisplayFor(u => item.Text)</p>
+                </div>
+            </div>
             <hr />
         }
 
-   
+
+        @Html.Partial("_CommentsForm", new SerFy_v2._0.Models.Comment { MovieFK = Model.ID })
+    </div>
+
+
+
 </div>
