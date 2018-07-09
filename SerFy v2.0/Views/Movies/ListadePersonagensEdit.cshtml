@@ -1,0 +1,38 @@
+﻿@model SerFy_v2._0.Models.viewModelEditFilme
+
+@{
+    ViewBag.Title = "ListadePersonagensEdit";
+}
+
+<div class="container">
+    <div class="row">
+
+        @foreach (var personagem in Model.ListAllcharacters)
+        {
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                <label>
+                    @if (Model.idsCharacters.Contains(personagem.ID))
+                    {
+                        <input type="checkbox" name="@Html.NameFor(c=>c.idsCharacters)" checked value="@personagem.ID" />
+
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="@Html.NameFor(c=>c.idsCharacters)" value="@personagem.ID" />
+
+                    }
+                    @personagem.Name
+                </label>
+            </div>
+        }
+    </div>
+    <div hidden>
+        @foreach (var Comments in Model.ListComments)
+        {<input type="checkbox" name="@Html.NameFor(c=>c.idsComments)" checked value="@Comments.ID" />}
+        @foreach (var rate in Model.ListComments)
+        {<input type="checkbox" name="@Html.NameFor(c=>c.idsRates)" checked value="@rate.ID" />}
+
+
+
+    </div>
+</div>

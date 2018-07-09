@@ -361,6 +361,9 @@
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Movies\ListDirectors.cshtml" />
     <Content Include="Views\Movies\ListWriters.cshtml" />
+    <Content Include="Views\Movies\ListadePersonagensEdit.cshtml" />
+    <Content Include="Views\Movies\ListadeDiretoresEdit.cshtml" />
+    <Content Include="Views\Movies\ListadeEscritoresEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

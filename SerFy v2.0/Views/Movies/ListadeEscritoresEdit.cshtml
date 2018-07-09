@@ -1,0 +1,32 @@
+﻿@model SerFy_v2._0.Models.viewModelEditFilme
+
+@{
+    ViewBag.Title = "ListadeEscritoresEdit";
+}
+
+<div class="container">
+    <div class="row">
+
+        @foreach (var writers in Model.ListAllWriters)
+        {
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+            <label>
+                @if (Model.idsWriters.Contains(writers.ID))
+                {
+                    <input type="checkbox" name="@Html.NameFor(c=>c.idsWriters)" checked value="@writers.ID" />
+
+                }
+                else
+                {
+                    <input type="checkbox" name="@Html.NameFor(c=>c.idsWriters)" value="@writers.ID" />
+
+                }
+                @writers.Name
+            </label>
+        </div>
+        }
+    </div>
+
+
+
+</div>

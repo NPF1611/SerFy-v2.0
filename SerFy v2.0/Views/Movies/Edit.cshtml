@@ -1,4 +1,4 @@
-﻿@model SerFy_v2._0.Models.Movie
+﻿@model SerFy_v2._0.Models.viewModelEditFilme
 
 @{
     ViewBag.Title = "Edit";
@@ -11,78 +11,102 @@
 {
     @Html.AntiForgeryToken()
 
-    
-<div class="form-horizontal">
-    <h4>Movie</h4>
-    @Html.ActionLink("Back to movies", "Index")
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ID)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>Movie</h4>
+        @Html.ActionLink("Back to movies", "Index")
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IDvalue)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Photograph, htmlAttributes: new { @class = "control-label col-md-2" })
+            <button hidden> @Html.EditorFor(model => model.Photograph)</button>
+            <div class="col-md-10">
+                <p hidden>
+                    @Html.EditorFor(model => model.Photograph)
+                </p>
+                <input class="form-control btn-default" type="file" name="photo" />
+                @Html.ValidationMessageFor(model => model.Photograph, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*OLD Photos*@
+        <div hidden>
+            <input value="@Model.Photograph" class="form-control btn-default" type="text" name="oldphoto" />
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Trailer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Trailer, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Trailer, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sinopse, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sinopse, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sinopse, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dataDePub, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p hidden>
+                    @Html.EditorFor(model => model.dataDePub)
+                </p>
+                <input type="date" hidden class="form-control btn btn-default" value="@Model.dataDePub.ToString("yyyy-MM-dd")" name="date" />
+                @Html.ValidationMessageFor(model => model.dataDePub, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Listcharacters, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p hidden>
+                    @Html.EditorFor(model => model.idsCharacters)
+                </p>
+                @Html.Partial("ListadePersonagensEdit", Model)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ListDirectors, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p hidden>
+                    @Html.EditorFor(model => model.idsDirectores)
+                </p>
+                @Html.Partial("ListadeDiretoresEdit", Model)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ListWriters, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p hidden>
+                    @Html.EditorFor(model => model.idsWriters)
+                </p>
+                @Html.Partial("ListadeEscritoresEdit", Model)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Photograph, htmlAttributes: new { @class = "control-label col-md-2" })
-        <button hidden> @Html.EditorFor(model => model.Photograph)</button>
-        <div class="col-md-10">
-            <p hidden>
-                @Html.EditorFor(model => model.Photograph)
-            </p>
-            <input class="form-control btn-default" type="file" name="photo" />
-            @Html.ValidationMessageFor(model => model.Photograph, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Trailer, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Trailer, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Trailer, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.sinopse, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sinopse, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.sinopse, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.dataDePub, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <p hidden>
-                @Html.EditorFor(model => model.dataDePub)
-            </p>
-            <input type="date" hidden class="form-control btn btn-default" value="@Model.dataDePub.ToString("yyyy-MM-dd")" name="date" />
-            @Html.ValidationMessageFor(model => model.dataDePub, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.CharactersList, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <p hidden>
-                @Html.EditorFor(model => model.CharactersList)
-            </p>
-            @Html.Partial("ListadePersonagens", Model)
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>

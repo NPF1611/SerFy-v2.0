@@ -20,10 +20,16 @@ namespace SerFy_v2._0.Models
         public DateTime dataDePub { get; set; }
         public double Rating { get; set; }
 
+
         public virtual ICollection<Comment> Comments { get; set; }
+
         public virtual ICollection<Rate> Rates { get; set; }
+
+
         public virtual ICollection<Characters> CharactersList { get; set; }
+
         public virtual ICollection<Director> DirectorList { get; set; }
+
         public virtual ICollection<Writer> WriterList { get; set; }
     }
 }

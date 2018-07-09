@@ -179,14 +179,105 @@ namespace SerFy_v2._0.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Movie movie = db.Movies.Find(id);
 
-           
+            Movie movie = db.Movies.Find(id);
             if (movie == null)
             {
                 return HttpNotFound();
             }
-            return View(movie);
+
+            var model = new viewModelEditFilme();
+
+            var ch = db.Charas.ToList();
+            model.idsAllCharacters = new int[db.Charas.Count()];
+            model.ListAllcharacters = ch;
+
+            var dr = db.Directores.ToList();
+            model.idsAllCharacters = new int[db.Directores.Count()];
+            model.ListAllDirectors = dr;
+
+            var wr = db.Writers.ToList();
+            model.idsAllWriters = new int[db.Writers.Count()];
+            model.ListAllWriters = wr;
+
+
+            //Movie{id} characters
+            int i = 0;
+            var charactersAux = new List<Characters> { };
+            model.idsCharacters = new int[movie.CharactersList.Count()];
+            foreach (var p in movie.CharactersList)
+            {
+                model.idsCharacters[i] = p.ID;
+                charactersAux.Add(p);
+                i++;
+            }
+            model.Listcharacters = charactersAux;
+
+            //Movie{id} Directors
+            i = 0;
+            var directorsAux = new List<Director> { };
+            model.idsDirectores = new int[movie.DirectorList.Count()];
+            foreach (var d in movie.DirectorList)
+            {
+                model.idsDirectores[i] = d.ID;
+                directorsAux.Add(d);
+                i++;
+            }
+            model.ListDirectors = directorsAux;
+
+            //Movie{id} Writters
+            i = 0;
+            var wrtersAux = new List<Writer> { };
+            model.idsWriters = new int[movie.WriterList.Count()];
+            foreach (var w in movie.WriterList)
+            {
+                model.idsWriters[i] = w.ID;
+                wrtersAux.Add(w);
+                i++;
+            }
+            model.ListWriters = wrtersAux;
+
+            //Movie{id} Comments 
+            i = 0;
+            var CommentsAux = new List<Comment> { };
+            model.idsComments = new int[movie.Comments.Count()];
+            foreach (var cm in movie.Comments)
+            {
+                model.idsWriters[i] = cm.ID;
+                CommentsAux.Add(cm);
+                i++;
+            }
+            model.ListComments = CommentsAux;
+
+            //Movie{id} Comments 
+            i = 0;
+            var RateAux = new List<Rate> { };
+            model.idsComments = new int[movie.Comments.Count()];
+            foreach (var rt in movie.Rates)
+            {
+                model.idsRates[i] = rt.ID;
+                RateAux.Add(rt);
+                i++;
+            }
+            model.ListRates = RateAux;
+
+
+
+            model.IDvalue = movie.ID;
+            model.ListDirectors = movie.DirectorList;
+            model.ListWriters = movie.WriterList;
+            model.Name = movie.Name;
+            model.dataDePub = movie.dataDePub;
+            model.Photograph = movie.Photograph;
+            model.Trailer = movie.Trailer;
+            model.sinopse = movie.sinopse;
+            model.Rating = movie.Rating;
+
+
+
+
+
+            return View(model);
         }
 
         // POST: Movies/Edit/5
@@ -194,22 +285,29 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( Movie movie, DateTime date, HttpPostedFileBase photo)
+        public ActionResult Edit(viewModelEditFilme movie, DateTime date, HttpPostedFileBase photo,String oldphoto)
         {
 
-            int NewID = movie.ID;
+            var moveitoenter = new Movie();
+            //photo confirmations
             string photoName = "";
             string pathPhoto = "";
 
             if (photo != null)
             {
-                photoName = "MoviePhoto" + movie.ID + ".jpg";
+                photoName = "MoviePhoto" + movie.IDvalue + ".jpg";
                 pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Filme/"), photoName);
                 System.IO.File.Delete(pathPhoto);
                 movie.Photograph = photoName;
                 photo.SaveAs(pathPhoto);
             }
+            else {
 
+                
+                movie.Photograph = oldphoto;
+
+            }
+            //date confirmations
             if (date != new DateTime(2222, 02, 01))
             {
                 if (date.Day > DateTime.Now.Day && date.Month >= DateTime.Now.Month && date.Year >= DateTime.Now.Year)
@@ -227,12 +325,94 @@ namespace SerFy_v2._0.Controllers
 
 
             }
-
+            //trailer changes 
             movie.Trailer = movie.Trailer.Replace("/watch?v=", "/embed/");
+
+            //Lists
+            //--Characters
+            var charactersAux = new List<Characters> { };
+
+            foreach (var ch in movie.idsCharacters.ToList())
+            {
+                Characters charac = db.Charas.Find(ch);
+                charactersAux.Add(charac);
+            }
+            moveitoenter.CharactersList = charactersAux;
+
+            //--Directors
+            var directorsAux = new List<Director> { };
+
+            foreach (var ch in movie.idsDirectores.ToList())
+            {
+                Director drirec = db.Directores.Find(ch);
+                directorsAux.Add(drirec);
+            }
+            moveitoenter.DirectorList = directorsAux;
+
+
+            //--Writters
+            var WritersAux = new List<Writer> { };
+
+            foreach (var wr in movie.idsCharacters.ToList())
+            {
+                Writer writer = db.Writers.Find(wr);
+                WritersAux.Add(writer);
+            }
+            moveitoenter.WriterList = WritersAux;
+
+            //--Comments
+            if (movie.idsComments != null)
+            {
+                var commentsAux = new List<Comment> { };
+                foreach (var cm in movie.idsComments.ToList())
+                {
+                    Comment com = db.Comments.Find(cm);
+                    commentsAux.Add(com);
+                }
+                moveitoenter.Comments = commentsAux;
+            }
+            //rate
+            if (movie.idsRates != null)
+            {
+                var rateAux = new List<Rate> { };
+                foreach (var rt in movie.idsRates.ToList())
+                {
+                    Rate rat = db.Rates.Find(rt);
+                    rateAux.Add(rat);
+                }
+                moveitoenter.Rates = rateAux;
+            }
+
+
+
+            //MOVIE entries
+            moveitoenter.ID = movie.IDvalue;
+            moveitoenter.Name = movie.Name;
+            moveitoenter.Photograph = movie.Photograph;
+            moveitoenter.Trailer = movie.Trailer;
+            moveitoenter.sinopse = movie.sinopse;
+            moveitoenter.dataDePub = movie.dataDePub;
+            moveitoenter.Rating = movie.Rating;
+
+            if (moveitoenter.Comments == null)
+            {
+                moveitoenter.Comments = new List<Comment> { };
+            }
+            if (moveitoenter.Rates == null)
+            {
+                moveitoenter.Rates = new List<Rate> { };
+            }
+ 
+
+
+
+
+
 
             if (ModelState.IsValid)
             {
-                db.Entry(movie).State = EntityState.Modified;
+                db.Entry(moveitoenter).State = EntityState.Modified;
+                var N = db.Entry(moveitoenter).State;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -262,7 +442,8 @@ namespace SerFy_v2._0.Controllers
             Movie movie = db.Movies.Find(id);
 
             movie.CharactersList = new List<Characters> { };
-            foreach (var ch in movie.CharactersList.ToList()) {
+            foreach (var ch in movie.CharactersList.ToList())
+            {
                 movie.CharactersList.Remove(ch);
             }
 
@@ -277,15 +458,18 @@ namespace SerFy_v2._0.Controllers
             {
                 movie.WriterList.Remove(wr);
             }
-
             movie.Comments = new List<Comment> { };
             foreach (var cm in movie.Comments.ToList())
             {
+                var elC = db.Comments.Find(cm.ID);
+                db.Comments.Remove(elC);
                 movie.Comments.Remove(cm);
             }
             movie.Rates = new List<Rate> { };
             foreach (var rt in movie.Rates.ToList())
             {
+                var elR = db.Rates.Find(rt.ID);
+                db.Rates.Remove(elR);
                 movie.Rates.Remove(rt);
             }
 

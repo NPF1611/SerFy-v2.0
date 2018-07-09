@@ -11,6 +11,7 @@ namespace SerFy_v2._0.Models
 
 
 
+        public int IDvalue { get; set; }
         [Required]
         [Display(Name = "Title")]
         public string Name { get; set; }
@@ -35,6 +36,38 @@ namespace SerFy_v2._0.Models
         [Display(Name = "Writers")]
         public int[] idsWriters { get; set; }
         public IEnumerable<Writer> ListWriters { get; internal set; }
+
+        [Display(Name = "Comments")]
+        public int[] idsComments { get; set; }
+        public IEnumerable<Comment> ListComments { get; internal set; }
+
+        [Display(Name = "Rate")]
+        public int[] idsRates { get; set; }
+        public IEnumerable<Rate> ListRates { get; internal set; }
+
+        //param w/the total 
+
+        [Display(Name = "Characters")]
+        public int[] idsAllCharacters { get; set; }
+
+        public IEnumerable<Characters> ListAllcharacters { get; set; }
+
+        [Display(Name = "Directors")]  
+        public int[] idsAllDirectores { get; set; }
+
+        public IEnumerable<Director> ListAllDirectors { get; set; }
+
+        [Display(Name = "Writers")]
+        public int[] idsAllWriters { get; set; }
+        public IEnumerable<Writer> ListAllWriters { get; internal set; }
+
+        [Display(Name = "Comments")]
+        public int[] idsAllComments { get; set; }
+        public IEnumerable<Comment> ListAllComments { get; internal set; }
+
+        [Display(Name = "Rate")]
+        public int[] idsAllRates { get; set; }
+        public IEnumerable<Rate> ListAllRates { get; internal set; }
 
 
     }
