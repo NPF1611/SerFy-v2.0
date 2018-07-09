@@ -174,14 +174,14 @@ namespace SerFy_v2._0.Controllers
 
         // GET: Movies/Edit/5
         public ActionResult Edit(int? id)
-
-
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Movie movie = db.Movies.Find(id);
+
+           
             if (movie == null)
             {
                 return HttpNotFound();
@@ -194,7 +194,7 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Photograph,Trailer,sinopse,Rating")] Movie movie, DateTime date, HttpPostedFileBase photo, DateTime OlddateTime)
+        public ActionResult Edit( Movie movie, DateTime date, HttpPostedFileBase photo)
         {
 
             int NewID = movie.ID;
@@ -276,6 +276,17 @@ namespace SerFy_v2._0.Controllers
             foreach (var wr in movie.WriterList.ToList())
             {
                 movie.WriterList.Remove(wr);
+            }
+
+            movie.Comments = new List<Comment> { };
+            foreach (var cm in movie.Comments.ToList())
+            {
+                movie.Comments.Remove(cm);
+            }
+            movie.Rates = new List<Rate> { };
+            foreach (var rt in movie.Rates.ToList())
+            {
+                movie.Rates.Remove(rt);
             }
 
             db.Movies.Remove(movie);

@@ -41,7 +41,7 @@ namespace SerFy_v2._0
             }
 
             // criar a Role 'Moderador'
-            if (!roleManager.RoleExists("V2"))
+            if (!roleManager.RoleExists("Version2"))
             {
                 // não existe a 'role'
                 // então, criar essa role
@@ -100,7 +100,7 @@ namespace SerFy_v2._0
             }
             if (chkUser2.Succeeded)
             {
-                var result2 = userManager.AddToRole(user2.Id, "V2");
+                var result2 = userManager.AddToRole(user2.Id, "Version2");
             }
         }
 
