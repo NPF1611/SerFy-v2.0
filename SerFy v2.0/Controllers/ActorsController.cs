@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -38,7 +39,13 @@ namespace SerFy_v2._0.Controllers
         // GET: Actors/Create
         public ActionResult Create()
         {
-            return View();
+
+            var ch = db.Charas.ToList();
+            var model = new ViewModelCreateActors();
+            model.IdsAllCha = new int[db.Charas.Count()];
+            model.ListAllCha = ch;
+
+            return View(model);
         }
 
         // POST: Actors/Create
@@ -46,8 +53,65 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Photograph,BD,Minibio")] Actors actors)
+        public ActionResult Create(ViewModelCreateActors Actor, Actors actors, HttpPostedFileBase photo,DateTime Date)
         {
+            //new actor creation
+            Actors newActor = new Actors();
+            //define the movie ID
+            int newID;
+            if (db.Actors.Count() == 0)
+            {
+                newID = 1;
+
+            }
+            else
+            {
+                newID = db.Actors.Max(a => a.ID) + 1;
+            }
+            newActor.ID = newID;
+            
+            //List inicialization 
+            var chr = db.Charas.ToList();
+            Actor.ListCha = chr;
+            
+            //Name verification
+            if (Actor.Name == null)
+            {
+                ModelState.AddModelError("", "Name not found");
+
+            }
+
+            //define the photo path
+            string photoName = "ActorPhoto" + newID;
+            string pathPhoto = "";
+
+
+            if (photo == null)
+            {
+                ModelState.AddModelError("", "Image not found");
+                return View(Actor);
+            }
+            else
+            {
+                if (photo.ContentType == "image/jpeg")
+                {
+                    photoName = photoName + ".jpg";
+                    newActor.Photograph = photoName;
+                    pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Filme/"), photoName);
+
+                }
+                else
+                {
+
+                    ModelState.AddModelError("", "Invalid photo");
+
+                }
+
+            }
+
+
+
+            //ModelState
             if (ModelState.IsValid)
             {
                 db.Actors.Add(actors);

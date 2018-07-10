@@ -38,6 +38,9 @@ namespace SerFy_v2._0.Controllers
         // GET: Characters/Create
         public ActionResult Create()
         {
+            
+
+
             return View();
         }
 

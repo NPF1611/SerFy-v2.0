@@ -46,7 +46,7 @@ namespace SerFy_v2._0
                 // não existe a 'role'
                 // então, criar essa role
                 var role = new IdentityRole();
-                role.Name = "V2";
+                role.Name = "Version2";
                 roleManager.Create(role);
             }
 

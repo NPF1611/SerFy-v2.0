@@ -46,7 +46,7 @@ namespace SerFy_v2._0.Controllers
             model.Listcharacters = ch;
 
             var dr = db.Directores.ToList();
-            model.idsCharacters = new int[db.Directores.Count()];
+            model.idsDirectores = new int[db.Directores.Count()];
             model.ListDirectors = dr;
 
             var wr = db.Writers.ToList();
@@ -62,7 +62,7 @@ namespace SerFy_v2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ViewModelCreateFilmePerso movie, HttpPostedFileBase photo, DateTime date)
         {
-            //criar um filme
+            //new movie creation
             Movie newmovie = new Movie();
             //define the movie ID
             int newID;
@@ -77,7 +77,24 @@ namespace SerFy_v2._0.Controllers
             }
 
             newmovie.ID = newID;
+            
+            //Lists inicialization 
+            var chr = db.Charas.ToList();
+            movie.Listcharacters = chr;
 
+            var drs = db.Directores.ToList();
+            movie.ListDirectors = drs;
+
+            var wrs = db.Writers.ToList();
+            movie.ListWriters = wrs;
+
+            //Name verification
+            if (movie.Name == null) {
+                ModelState.AddModelError("", "Name not found");
+
+            }
+            //
+            
             //define the photo path
             string photoName = "MoviePhoto" + newID;
             string pathPhoto = "";
@@ -94,15 +111,45 @@ namespace SerFy_v2._0.Controllers
                     photoName = photoName + ".jpg";
                     newmovie.Photograph = photoName;
                     pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Filme/"), photoName);
-                    //Image image = new Bitmap(photo, 300, 800 ); 
-
+                   
                 }
                 else
                 {
+
                     ModelState.AddModelError("", "Invalid photo");
+
                 }
 
             }
+            //see if the fks are selected
+
+            if (movie.idsCharacters == null){
+                movie.idsCharacters = new int[0];
+                movie.idsDirectores = new int[0];
+                movie.idsWriters = new int[0];
+                ModelState.AddModelError("","No Characters selected ");
+                return View(movie);
+            }
+
+            if (movie.idsDirectores == null)
+            {
+
+                movie.idsDirectores = new int[0];
+                movie.idsWriters = new int[0];
+
+                ModelState.AddModelError("", "No Directors selected ");
+                return View(movie);
+            }
+
+            if (movie.idsWriters == null)
+            {
+                
+                movie.idsWriters = new int[0];
+
+                ModelState.AddModelError("", "No Writers selected ");
+                return View(movie);
+            }
+
             //define the date
             if (date == null)
             {
@@ -127,7 +174,7 @@ namespace SerFy_v2._0.Controllers
             newmovie.Rating = 0;
 
             newmovie.CharactersList = new List<Characters> { };
-
+            
             foreach (var ch in movie.idsCharacters.ToList())
             {
                 Characters charac = db.Charas.Find(ch);
@@ -288,10 +335,17 @@ namespace SerFy_v2._0.Controllers
         public ActionResult Edit(viewModelEditFilme movie, DateTime date, HttpPostedFileBase photo,String oldphoto)
         {
 
-            var moveitoenter = new Movie();
+            var moveitoenter = db.Movies.Find(movie.IDvalue);
             //photo confirmations
             string photoName = "";
             string pathPhoto = "";
+            //All ids are full here
+            //movie.idsAllCharacters = new int[db.Charas.Count()];
+            //movie.idsAllDirectores = new int[db.Directores.Count()];
+            //movie.idsAllWriters = new int[db.Writers.Count()];
+            //movie.idsAllComments = new int[db.Comments.Count()];
+            //movie.idsAllRates = new int[db.Rates.Count()];
+
 
             if (photo != null)
             {
@@ -329,36 +383,67 @@ namespace SerFy_v2._0.Controllers
             movie.Trailer = movie.Trailer.Replace("/watch?v=", "/embed/");
 
             //Lists
-            //--Characters
-            var charactersAux = new List<Characters> { };
 
+            //--Characters-remove
+            foreach (var AllCharacters in movie.idsAllCharacters){
+                Characters charac = db.Charas.Find(AllCharacters);
+                if (moveitoenter.CharactersList.Contains(charac))
+                {
+                    moveitoenter.CharactersList.Remove(charac);
+                }
+            }
+
+            //--Characters-add
             foreach (var ch in movie.idsCharacters.ToList())
             {
                 Characters charac = db.Charas.Find(ch);
-                charactersAux.Add(charac);
+                if (!moveitoenter.CharactersList.Contains(charac))
+                {
+                    moveitoenter.CharactersList.Add(charac);
+                }
             }
-            moveitoenter.CharactersList = charactersAux;
 
-            //--Directors
-            var directorsAux = new List<Director> { };
-
-            foreach (var ch in movie.idsDirectores.ToList())
+            //--Directors-Remove
+            foreach (var AllDirectors in movie.idsAllDirectores.ToList())
             {
-                Director drirec = db.Directores.Find(ch);
-                directorsAux.Add(drirec);
+                Director dir = db.Directores.Find(AllDirectors);
+                if (moveitoenter.DirectorList.Contains(dir))
+                {
+                    moveitoenter.DirectorList.Remove(dir);
+                }
             }
-            moveitoenter.DirectorList = directorsAux;
 
+            
 
-            //--Writters
-            var WritersAux = new List<Writer> { };
-
-            foreach (var wr in movie.idsCharacters.ToList())
+            //--Directors-Add
+            foreach (var dir in movie.idsDirectores.ToList())
             {
-                Writer writer = db.Writers.Find(wr);
-                WritersAux.Add(writer);
+                Director direc = db.Directores.Find(dir);
+                if (!moveitoenter.DirectorList.Contains(direc))
+                {
+                    moveitoenter.DirectorList.Add(direc);
+                }
             }
-            moveitoenter.WriterList = WritersAux;
+            //--Writters-Remove
+            foreach (var AllWriters in movie.idsAllWriters.ToList())
+            {
+                Writer writ = db.Writers.Find(AllWriters);
+                if (moveitoenter.WriterList.Contains(writ))
+                {
+                    moveitoenter.WriterList.Remove(writ);
+                }
+            }
+
+
+            //--Writters-Add
+            foreach (var wrt in movie.idsWriters.ToList())
+            {
+                Writer writer = db.Writers.Find(wrt);
+                if (!moveitoenter.WriterList.Contains(writer))
+                {
+                    moveitoenter.WriterList.Add(writer);
+                }
+            }
 
             //--Comments
             if (movie.idsComments != null)
@@ -383,8 +468,6 @@ namespace SerFy_v2._0.Controllers
                 moveitoenter.Rates = rateAux;
             }
 
-
-
             //MOVIE entries
             moveitoenter.ID = movie.IDvalue;
             moveitoenter.Name = movie.Name;
@@ -402,17 +485,14 @@ namespace SerFy_v2._0.Controllers
             {
                 moveitoenter.Rates = new List<Rate> { };
             }
- 
 
-
-
-
-
+            
+            
 
             if (ModelState.IsValid)
             {
                 db.Entry(moveitoenter).State = EntityState.Modified;
-                var N = db.Entry(moveitoenter).State;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

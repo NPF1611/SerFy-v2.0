@@ -1,0 +1,31 @@
+﻿@model SerFy_v2._0.Models.ViewModelCreateActors
+
+@{
+    ViewBag.Title = "ListChaCreate";
+}
+
+<div class="container">
+    <div class="row">
+
+        @foreach (var charac in Model.ListAllCha)
+        {
+            if (charac.actor == null)
+            {
+                <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                    <label>
+                        <input type="checkbox" name="@Html.NameFor(c => c.IdsCha)" value="@charac.ID" />
+                        @charac.Name
+                    </label>
+                </div>
+            }
+        }
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default" onclick="location.href='@Url.Action("Create", "Characters")'"> Create a Character </button>
+
+            </div>
+        </div>
+
+    </div>
+</div>

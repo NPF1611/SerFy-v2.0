@@ -9,21 +9,27 @@
 
         @foreach (var director in Model.ListAllDirectors)
         {
-        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
-            <label>
-                @if (Model.idsDirectores.Contains(director.ID))
-                {
-                    <input type="checkbox" name="@Html.NameFor(c=>c.idsDirectores)" checked value="@director.ID" />
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                <label>
+                    @if (Model.idsDirectores.Contains(director.ID))
+                    {
+                        <input type="checkbox" name="@Html.NameFor(c=>c.idsDirectores)" checked value="@director.ID" />
+                        @*<p hidden> @Html.EditorFor(model => model.Listcharacters)</p>
+                            <p hidden> @Html.EditorFor(model => model.ListDirectors)</p>
+                            <p hidden> @Html.EditorFor(model => model.ListWriters)</p>*@
 
-                }
-                else
-                {
-                    <input type="checkbox" name="@Html.NameFor(c=>c.idsDirectores)" value="@director.ID" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="@Html.NameFor(c=>c.idsDirectores)" value="@director.ID" />
 
-                }
-                @director.Name
-            </label>
-        </div>
+                    }
+                    @director.Name
+                </label>
+                <label hidden>
+                    <input name="@Html.NameFor(c=>c.idsAllDirectores)" value="@director.ID" />
+                </label>
+            </div>
         }
     </div>
 
