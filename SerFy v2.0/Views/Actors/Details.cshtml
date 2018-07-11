@@ -4,17 +4,18 @@
     ViewBag.Title = "Details";
 }
 
-
-<div class="container" style="margin-top:30px">
-    <div class="row">
-        <button class="btn btn-default">@Html.ActionLink("Change", "Edit", new { id = Model.ID })</button>
-        <button class="btn btn-default btn-danger">@Html.ActionLink("Delete", "Delete",new {id= Model.ID })</button>@*Not working*@
+@if (User.IsInRole("Administrador"))
+{
+    <div class="container" style="margin-top:30px">
+        <div class="row">
+            <button class="btn btn-default" onclick="location.href='@Url.Action("Edit", "Actors", new { id = Model.ID })'">@*@Html.ActionLink("Change", "Edit", new { id = Model.ID })*@Edit Actor</button>
+            <button class="btn btn-default btn-danger" onclick="location.href='@Url.Action("Delete", "Actors", new { id = Model.ID })'">@*@Html.ActionLink("Delete", "Delete", new { id = Model.ID })*@Delete Actor</button>@*Not working*@
+        </div>
     </div>
-</div>
+}
 
 
-
-<div class="container" style="margin-top:40px; margin-bottom:40px;" >
+<div class="container" style="margin-top:40px; margin-bottom:40px;">
     <div class="row">
         <div class="col-lg-4">
             <img src="~/Multimedia/Atores/@Model.Photograph" class="img-rounded" style="object-fit: cover;" height="500" width="350" />

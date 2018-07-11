@@ -15,7 +15,7 @@ namespace SerFy_v2._0.Models
         //The photograph name
         public string Photograph { get; set; }
         // The date and place where the Actor was born
-        public DateTime BD { get; internal set; }
+        public DateTime BD { get;  set; }
         //a small Biography 
         public string Minibio { get; set; }
 

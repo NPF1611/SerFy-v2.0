@@ -12,7 +12,7 @@
                 <label>
                     @*@if (charac.actor == null)
                     {*@
-                        <input type="checkbox" name="@Html.NameFor(c => c.IdsCha)"  value="@charac.ID" />
+                        <input type="radio" name="@Html.NameFor(c => c.IdsCha)"  value="@charac.ID" />
                         @charac.Name
                     @*}*@
                 </label>

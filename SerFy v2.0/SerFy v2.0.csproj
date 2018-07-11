@@ -217,6 +217,7 @@
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModelEditActors.cs" />
     <Compile Include="Models\ViewModelCreateActors.cs" />
     <Compile Include="Models\ViewModelCreateCharacter.cs" />
     <Compile Include="Models\ViewModelCreateFilmePerso.cs" />
@@ -367,6 +368,7 @@
     <Content Include="Views\Movies\ListadeDiretoresEdit.cshtml" />
     <Content Include="Views\Movies\ListadeEscritoresEdit.cshtml" />
     <Content Include="Views\Actors\ListChaCreate.cshtml" />
+    <Content Include="Views\Actors\ListChaCreateEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

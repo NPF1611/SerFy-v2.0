@@ -1,0 +1,56 @@
+﻿@model SerFy_v2._0.Models.ViewModelEditActors
+
+@{
+    ViewBag.Title = "ListChaCreateEdit";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var charac in Model.ListAllCha)
+        {
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                <label>
+                    @if (Model.IdsCha.Contains(charac.ID))
+                    {
+                        <input type="radio" checked name="@Html.NameFor(c => c.IdsCha)" value="@charac.ID" />
+                        @charac.Name
+                    }
+                    else
+                    {
+                        <input type="radio"  name="@Html.NameFor(c => c.IdsCha)" value="@charac.ID" />
+                        @charac.Name
+
+                    }
+                </label>
+                <label hidden>
+                    <input name="@Html.NameFor(c => c.IdsAllCha)" value="@charac.ID" />
+                </label>
+
+            </div>
+
+        }
+
+
+        @*<label hidden>
+                <input type="checkbox" name="@Html.NameFor(c => c.IdsAllCha)" value="@charac.ID" />
+            </label>
+            @if (charac.actor == null)
+            {
+
+                <label>
+                    <input type="checkbox" name="@Html.NameFor(c => c.IdsCha)" value="@charac.ID" />
+                    @charac.Name
+                </label>*@
+
+
+
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default" name="valueButton" value="1" onclick="location.href='@Url.Action("Create", "Characters")'"> Create a new Character </button>
+
+            </div>
+        </div>
+
+    </div>
+</div>

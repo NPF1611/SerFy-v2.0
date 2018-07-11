@@ -334,7 +334,7 @@ namespace SerFy_v2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(viewModelEditFilme movie, DateTime date, HttpPostedFileBase photo,String oldphoto)
         {
-
+            //get the movie
             var moveitoenter = db.Movies.Find(movie.IDvalue);
             //photo confirmations
             string photoName = "";
