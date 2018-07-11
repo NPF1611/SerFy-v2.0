@@ -218,6 +218,7 @@
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ViewModelCreateActors.cs" />
+    <Compile Include="Models\ViewModelCreateCharacter.cs" />
     <Compile Include="Models\ViewModelCreateFilmePerso.cs" />
     <Compile Include="Models\viewModelEditFilme.cs" />
     <Compile Include="Models\Writer.cs" />

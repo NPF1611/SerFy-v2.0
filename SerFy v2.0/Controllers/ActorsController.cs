@@ -53,8 +53,17 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ViewModelCreateActors Actor, Actors actors, HttpPostedFileBase photo,DateTime Date)
+        public ActionResult Create(ViewModelCreateActors Actor, HttpPostedFileBase photo, DateTime Date, int valueButton)
         {
+            var p = db.Charas.ToList();
+            Actor.ListAllCha = p;
+
+            Actor.ListAllCha = db.Charas;
+            if (valueButton == 1)
+            {
+                return RedirectToAction("Create", "Characters");
+
+            }
             //new actor creation
             Actors newActor = new Actors();
             //define the movie ID
@@ -69,15 +78,16 @@ namespace SerFy_v2._0.Controllers
                 newID = db.Actors.Max(a => a.ID) + 1;
             }
             newActor.ID = newID;
-            
+
             //List inicialization 
             var chr = db.Charas.ToList();
             Actor.ListCha = chr;
-            
+
             //Name verification
             if (Actor.Name == null)
             {
                 ModelState.AddModelError("", "Name not found");
+                return View(Actor);
 
             }
 
@@ -97,7 +107,7 @@ namespace SerFy_v2._0.Controllers
                 {
                     photoName = photoName + ".jpg";
                     newActor.Photograph = photoName;
-                    pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Filme/"), photoName);
+                    pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Atores/"), photoName);
 
                 }
                 else
@@ -108,18 +118,51 @@ namespace SerFy_v2._0.Controllers
                 }
 
             }
+            //Date validation
+            if (Date < DateTime.Now)
+            {
+                newActor.BD = Date;
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid Date");
+                return View(Actor);
+            }
+            //name and bio attribution
+            newActor.Name = Actor.Name;
+            newActor.Minibio = Actor.Minibio;
+            //CharacerList Validation/attribution
+            if (Actor.IdsCha == null)
+            {
+                ModelState.AddModelError("", "No characters selected");
+                return View(Actor);
+            }
 
+            if (Actor.IdsCha.Length > 1)
+            {
+                ModelState.AddModelError("", "YOU CAN ONLY SELECT ONE CHARACTER");
+                return View(Actor);
+            }
+
+            var CharacterAux = new List<Characters> { };
+            foreach (var charac in Actor.IdsCha)
+            {
+                Characters ch1 = db.Charas.Find(charac);
+                CharacterAux.Add(ch1);
+            }
+            newActor.CharacterList = CharacterAux;
 
 
             //ModelState
             if (ModelState.IsValid)
             {
-                db.Actors.Add(actors);
+                db.Actors.Add(newActor);
                 db.SaveChanges();
+                photo.SaveAs(pathPhoto);
                 return RedirectToAction("Index");
             }
 
-            return View(actors);
+            return View(Actor);
         }
 
         // GET: Actors/Edit/5
