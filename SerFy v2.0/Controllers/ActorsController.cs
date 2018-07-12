@@ -66,7 +66,7 @@ namespace SerFy_v2._0.Controllers
             }
             //new actor creation
             Actors newActor = new Actors();
-            //define the movie ID
+            //define the Actor ID
             int newID;
             if (db.Actors.Count() == 0)
             {
@@ -208,15 +208,15 @@ namespace SerFy_v2._0.Controllers
         public ActionResult Edit(ViewModelEditActors actors, HttpPostedFileBase photo, DateTime date, String oldphoto, int valueButton)
         {
             //get the actor
-            var newActor = db.Actors.Find(actors.IdValue);
-            //--photo confirmations
-            //photo name variable
+            Actors newActor = db.Actors.Find(actors.IdValue);
 
+            //button verification
             if (valueButton == 1)
             {
                 return RedirectToAction("Create", "Characters");
             }
-
+            //--photo confirmations
+            //photo name variable
             string photoName = "";
             //photo path variable
             string pathPhoto = "";
@@ -224,8 +224,8 @@ namespace SerFy_v2._0.Controllers
             //photo validations and names
             if (photo != null)
             {
-                photoName = "MoviePhoto" + actors.IdValue + ".jpg";
-                pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Filme/"), photoName);
+                photoName = "ActorPhoto" + actors.IdValue + ".jpg";
+                pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Atores/"), photoName);
                 System.IO.File.Delete(pathPhoto);
                 actors.Photograph = photoName;
                 photo.SaveAs(pathPhoto);
@@ -242,6 +242,7 @@ namespace SerFy_v2._0.Controllers
             if (date > DateTime.Now)
             {
                 ModelState.AddModelError("", "Invalid date");
+               
             }
             else
             {
@@ -309,6 +310,10 @@ namespace SerFy_v2._0.Controllers
         {
             Actors actors = db.Actors.Find(id);
             actors.CharacterList = new List<Characters> { };
+            foreach (var ch in actors.CharacterList.ToList())
+            {
+                actors.CharacterList.Remove(ch);
+            }
             db.Actors.Remove(actors);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -10,7 +10,6 @@ namespace SerFy_v2._0.Models
         public int ID { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
         public string Photograph { get; set; }
         public DateTime Place_DB { get; set; }
         public string MiniBio { get; set; }

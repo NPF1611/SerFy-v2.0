@@ -3,13 +3,16 @@
 @{
     ViewBag.Title = "Details";
 }
-<div class="container" style="margin-top:30px">
-    <div class="row">
-        <button class="btn btn-default">@Html.ActionLink("Change", "Edit", new { id = Model.ID })</button>
-        <button class="btn btn-default btn-danger">@Html.ActionLink("Delete", "Delete", new { id = Model.ID })</button>
-    </div>
-</div>
 
+@if (User.IsInRole("Administrador"))
+{
+    <div class="container" style="margin-top:30px">
+        <div class="row">
+            <button class="btn btn-default" onclick="location.href='@Url.Action("Edit", "Directors", new { id = Model.ID })'">@*@Html.ActionLink("Change", "Edit", new { id = Model.ID })*@Change</button>
+            <button class="btn btn-default btn-danger" onclick="location.href='@Url.Action("Delete", "Directors", new { id = Model.ID })'">@*@Html.ActionLink("Delete", "Delete", new { id = Model.ID })*@Delete</button>
+        </div>
+    </div>
+}
 <div class="container" style="margin-bottom:40px;margin-top:40px">
     <div class="row">
         <div class="col-lg-4">

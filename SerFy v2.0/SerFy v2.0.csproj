@@ -217,6 +217,10 @@
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\Rate.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModelEditWriter.cs" />
+    <Compile Include="Models\ViewModelCreateWriter.cs" />
+    <Compile Include="Models\ViewModelCreateDirector.cs" />
+    <Compile Include="Models\ViewModelEditDirector.cs" />
     <Compile Include="Models\ViewModelEditActors.cs" />
     <Compile Include="Models\ViewModelCreateActors.cs" />
     <Compile Include="Models\ViewModelCreateCharacter.cs" />
@@ -231,6 +235,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Personal.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -369,6 +374,8 @@
     <Content Include="Views\Movies\ListadeEscritoresEdit.cshtml" />
     <Content Include="Views\Actors\ListChaCreate.cshtml" />
     <Content Include="Views\Actors\ListChaCreateEdit.cshtml" />
+    <Content Include="Views\Directors\ListDirEdit.cshtml" />
+    <Content Include="Views\Directors\ListDirCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,6 +20,8 @@ namespace SerFy_v2._0.Models
         public string Minibio { get; set; }
         //value IdValue
         public int IdValue { get; set; }
+        
+        
         //teste
         [Display(Name = "Character")]
         public int[] IdsCha { get; set; }

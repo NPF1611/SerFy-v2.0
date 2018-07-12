@@ -1,4 +1,4 @@
-﻿@model SerFy_v2._0.Models.Director
+﻿@model SerFy_v2._0.Models.ViewModelEditDirector
 
 @{
     ViewBag.Title = "Edit";
@@ -7,15 +7,15 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Directors", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Director</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.IDValue)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -25,10 +25,14 @@
             </div>
         </div>
 
+
         <div class="form-group">
             @Html.LabelFor(model => model.Photograph, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Photograph, new { htmlAttributes = new { @class = "form-control" } })
+                <input class="form-control btn-default" type="file" name="photo" />
+                <label hidden>
+                    <input value="@Model.Photograph" class="form-control btn-default" type="text" name="oldphoto" />
+                </label>
                 @Html.ValidationMessageFor(model => model.Photograph, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,7 +40,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Place_BD, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Place_BD, new { htmlAttributes = new { @class = "form-control" } })
+                <input required class="form-control btn btn-default" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="date" />
                 @Html.ValidationMessageFor(model => model.Place_BD, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,17 +48,28 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MiniBio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MiniBio, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.MiniBio, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.MiniBio, "", new { @class = "text-danger" })
             </div>
         </div>
+        @*Partial View*@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.LabelFor(model => model.MovieFK)
+                @Html.Partial("ListDirEdit", Model)
+            </div>
+        </div>
+
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <button type="submit" value="2" name="valueButton" class="btn btn-default">Save</button>
             </div>
         </div>
+
     </div>
+
 }
 
 <div>

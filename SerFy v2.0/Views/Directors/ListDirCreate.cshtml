@@ -1,0 +1,50 @@
+﻿@model SerFy_v2._0.Models.ViewModelCreateDirector
+
+@{
+    ViewBag.Title = "ListDirCreate";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var mov in Model.MovieAllList)
+        {
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                <label>
+                  
+                        <input type="checkbox"  name="@Html.NameFor(c => c.MovieFK)" value="@mov.ID" />
+                        @mov.Name
+
+                   
+                </label>
+                <label hidden>
+                    <input name="@Html.NameFor(c => c.MovieAllFK)" value="@mov.ID" />
+                </label>
+
+            </div>
+
+        }
+
+
+        @*<label hidden>
+                <input type="checkbox" name="@Html.NameFor(c => c.IdsAllCha)" value="@charac.ID" />
+            </label>
+            @if (charac.actor == null)
+            {
+
+                <label>
+                    <input type="checkbox" name="@Html.NameFor(c => c.IdsCha)" value="@charac.ID" />
+                    @charac.Name
+                </label>*@
+
+
+
+        <div class="form-group">
+
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default" name="valueButton" value="1" onclick="location.href='@Url.Action("Create", "Movies")'"> Create a new Movie </button>
+
+            </div>
+        </div>
+
+    </div>
+</div>

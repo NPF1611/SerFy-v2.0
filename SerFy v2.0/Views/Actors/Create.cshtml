@@ -32,7 +32,9 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Minibio, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Minibio, new { htmlAttributes = new { @class = "form-control" } })
+            <link href="~/Content/Personal.css" />
+            @Html.TextAreaFor(model => model.Minibio, new { htmlAttributes = new { @class = "form-control txOne", } })
+
             @Html.ValidationMessageFor(model => model.Minibio, "", new { @class = "text-danger" })
         </div>
     </div>

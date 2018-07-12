@@ -50,7 +50,7 @@
             @Html.LabelFor(model => model.dataDePub, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                <input class="form-control btn btn-default" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="date" />
+                <input required class="form-control btn btn-default" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="date" />
                 @Html.ValidationMessageFor(model => model.dataDePub, "", new { @class = "text-danger" })
             </div>
         </div>
