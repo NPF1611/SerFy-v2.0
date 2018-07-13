@@ -10,121 +10,109 @@ using SerFy_v2._0.Models;
 
 namespace SerFy_v2._0.Controllers
 {
-    public class CommentsController : Controller
+    public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Comments
+        // GET: Users
         public ActionResult Index()
         {
-            return View(db.Comments.ToList());
+            return View(db.Utilizadores.ToList());
         }
 
-        // GET: Comments/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            User user = db.Utilizadores.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(user);
         }
 
-        // GET: Comments/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Comments/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Text,MovieFK")] Comment comment)
+        public ActionResult Create([Bind(Include = "ID,UName,Name,email,photo,CRTime")] User user)
         {
-
-            var utilizador = db.Utilizadores.Where(u => u.email == User.Identity.Name).FirstOrDefault();
-
-            comment.UserFK = utilizador.ID;
-
-
             if (ModelState.IsValid)
             {
-                db.Comments.Add(comment);
+                db.Utilizadores.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Movies", new { id = comment.MovieFK });
+                return RedirectToAction("Index");
             }
 
-            return View(comment);
+            return View(user);
         }
 
-        // GET: Comments/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            User user = db.Utilizadores.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(user);
         }
 
-        // POST: Comments/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Text")] Comment comment)
+        public ActionResult Edit([Bind(Include = "ID,UName,Name,email,photo,CRTime")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(comment).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(comment);
+            return View(user);
         }
 
-        // GET: Comments/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
+            User user = db.Utilizadores.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(comment);
+            return View(user);
         }
 
-        // POST: Comments/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id, String confirm)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Comment comment = db.Comments.Find(id);
-            int idValue = comment.MovieFK;
-            if (confirm.Equals("Delete"))
-            {
-
-                db.Comments.Remove(comment);
-                db.SaveChanges();
-            }
-            return RedirectToAction("Details", "Movies", new { id = idValue });
-
+            User user = db.Utilizadores.Find(id);
+            db.Utilizadores.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

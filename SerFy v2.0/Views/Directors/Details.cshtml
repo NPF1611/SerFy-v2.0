@@ -8,8 +8,8 @@
 {
     <div class="container" style="margin-top:30px">
         <div class="row">
-            <button class="btn btn-default" onclick="location.href='@Url.Action("Edit", "Directors", new { id = Model.ID })'">@*@Html.ActionLink("Change", "Edit", new { id = Model.ID })*@Change</button>
-            <button class="btn btn-default btn-danger" onclick="location.href='@Url.Action("Delete", "Directors", new { id = Model.ID })'">@*@Html.ActionLink("Delete", "Delete", new { id = Model.ID })*@Delete</button>
+            <button class="btn btn-default" onclick="location.href='@Url.Action("Edit", "Directors", new { id = Model.ID })'">@*@Html.ActionLink("Change", "Edit", new { id = Model.ID })*@Edit Director</button>
+            <button class="btn btn-default btn-danger" onclick="location.href='@Url.Action("Delete", "Directors", new { id = Model.ID })'">@*@Html.ActionLink("Delete", "Delete", new { id = Model.ID })*@Delete Director</button>
         </div>
     </div>
 }

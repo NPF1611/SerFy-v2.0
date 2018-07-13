@@ -8,22 +8,25 @@
 {
     <button class="btn-default btn" onclick="location.href='@Url.Action("Create", "Directors")'" style="margin-top:20px"> Create a new Director </button>
 }
-<div class="container" style="margin-top: 20px;">
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-lg-3 col-md-3">
-                <div style="height=300" width="200">
-                    <img height="300" width="200" class="img-rounded" style="cursor:pointer; object-fit:cover;" src="~/Multimedia/Directores/@item.Photograph" onclick="location.href='@Url.Action("Details", "Directors", new { id = item.ID })'">
-                    <div class="container">
-                        <h4><b>@item.Name</b></h4>
-                        @*<button class="btn btn-default">@Html.ActionLink("Edit Director", "Edit", new { id = item.ID })</button>*@
+    <div class="container" style="margin-top: 20px;">
+        <div class="row" style="text-align: left;margin-left: 10px;">
+            <h2 class="text-uppercase">Directors</h2>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-3">
+                    <div class="card" style="margin-top:20px;">
+                        <img height="300" width="200" class="img-rounded" style="cursor:pointer; object-fit:cover;" src="~/Multimedia/Directores/@item.Photograph" onclick="location.href='@Url.Action("Details", "Directors", new { id = item.ID })'">
+                        <div class="container">
+                            <h4><b>@item.Name</b></h4>
+                            @*<button class="btn btn-default">@Html.ActionLink("Edit Director", "Edit", new { id = item.ID })</button>*@
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
-        }
+            }
+        </div>
     </div>
-</div>
 

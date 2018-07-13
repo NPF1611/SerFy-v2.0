@@ -15,6 +15,7 @@ namespace SerFy_v2._0.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        ApplicationDbContext db = new ApplicationDbContext();
 
         public ManageController()
         {
@@ -64,6 +65,13 @@ namespace SerFy_v2._0.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+
+
+            var RealId = db.Utilizadores.Where(u => u.email == User.Identity.Name);
+            foreach (var val in RealId) {
+               Session["UserRealID"] = val.ID ;
+            }
+          
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),

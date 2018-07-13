@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        
+
         @foreach (var writters in Model.ListWriters)
         {
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
@@ -25,6 +25,11 @@
                 </label>
             </div>
         }
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-default" name="valueButton" value="3" onclick="location.href='@Url.Action("Create", "Writers")'"> Create a new Writer </button>
+        </div>
     </div>
 
 

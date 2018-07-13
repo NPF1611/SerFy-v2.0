@@ -7,8 +7,9 @@ using System.Web;
 
 namespace SerFy_v2._0.Models
 {
-    public class ViewModelCreateDirector
+    public class ViewModelEditWriter
     {
+        public int IDValue { get; set; }
         [Required]
         public string Name { get; set; }
         public string Photograph { get; set; }

@@ -60,7 +60,7 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ViewModelCreateFilmePerso movie, HttpPostedFileBase photo, DateTime date)
+        public ActionResult Create(ViewModelCreateFilmePerso movie, HttpPostedFileBase photo, DateTime date, int valueButton)
         {
             //new movie creation
             Movie newmovie = new Movie();

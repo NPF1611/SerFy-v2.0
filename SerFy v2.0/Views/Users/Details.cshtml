@@ -1,0 +1,61 @@
+﻿@model SerFy_v2._0.Models.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = null;
+}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-lg-4 col-sm-4 col-md-4">
+            <img class="img-rounded" style="object-fit:cover" width="250" height="300" src="~/Multimedia/Avatares/@Model.photo" />
+        </div>
+        <div style="align-content:space-around; " class="col-lg-4 col-sm-4 col-md-4">
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <p class="control-label col-md-10" style="text-align:left;">
+
+                            @Html.DisplayFor(Model => Model.UName)
+                        </p>
+                        @Html.ValidationMessageFor(model => model.UName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <p class="control-label col-md-10" style="text-align:left;">
+                            @Html.DisplayFor(Model => Model.Name)
+                        </p>
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <p class="control-label col-md-10" style="text-align:left">
+                            @Html.DisplayFor(Model => Model.email)
+                        </p>
+                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CRTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <p class="control-label col-md-4">
+                            @Model.CRTime.ToString("dd/mm/yyyy")
+                        </p>
+                        @Html.ValidationMessageFor(model => model.CRTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

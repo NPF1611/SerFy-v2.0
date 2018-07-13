@@ -16,7 +16,7 @@ namespace SerFy_v2._0
         }
 
         /// <summary>
-        /// cria, caso não existam, as Roles de suporte à aplicação: Veterinario, Funcionario, Dono
+        /// creates, caso não existam, as Roles de suporte à aplicação: Veterinario, Funcionario, Dono
         /// cria, nesse caso, também, um utilizador...
         /// </summary>
         private void iniciaAplicacao()
@@ -59,34 +59,36 @@ namespace SerFy_v2._0
                 role.Name = "Utilizador";
                 roleManager.Create(role);
             }
-          
+          //.----------------------------------Users creation---------------------------------.
 
-            // criar um utilizador 'Administrador'
+            //---------- create the 'Administrador'
             var user = new ApplicationUser();
-            user.UserName = "admin@mail.pt";
-            user.Email = "admin@mail.pt";
-            string userPWD = "IPT123";
+            user.UserName = "admin@gmail.pt";
+            user.Email = "admin@gmail.pt";
+            string userPWD = "Ipt123.";
             var chkUser = userManager.Create(user, userPWD);
 
             //dados do Admin
-            utilizador.Name = "Admin";
+            utilizador.Name ="admin@gmail.pt";
             utilizador.ID = 300;
             utilizador.UName = user.UserName;
-            utilizador.photo = "default_King.jpg";
+            utilizador.email = user.Email;
+            utilizador.photo = "default.jpg";
             utilizador.CRTime = System.DateTime.Now;
             db.Utilizadores.Add(utilizador);
 
-            // criar um utilizador 'Administrador'
+            //---------- criar um utilizador 'utilizador'
             var user2 = new ApplicationUser();
-            user2.UserName = "user@mail.pt";
-            user2.Email = "user@mail.pt";
+            user2.UserName = "user@gmail.pt";
+            user2.Email = "user@gmail.pt";
             string userPWD2 = "IPT123";
             var chkUser2 = userManager.Create(user2, userPWD2);
 
-            //dados do Admin
-            utilizador1.Name = "User";
+            //dados do Utilizador Comum
+            utilizador1.Name = "user@gmail.pt";
             utilizador1.ID = 300;
-            utilizador1.UName = user.UserName;
+            utilizador1.UName = user2.UserName;
+            utilizador1.email = user2.Email;
             utilizador1.photo = "default.jpg";
             utilizador1.CRTime = System.DateTime.Now;
             db.Utilizadores.Add(utilizador1);

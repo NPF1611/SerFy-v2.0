@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SerFy_v2._0.Models;
@@ -22,7 +24,7 @@ namespace SerFy_v2._0.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +36,9 @@ namespace SerFy_v2._0.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -120,7 +122,7 @@ namespace SerFy_v2._0.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -147,19 +149,40 @@ namespace SerFy_v2._0.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase avatarUpload)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            string AvatarName = "Avatar" + model.Utilizador.ID + ".jpg";
+            string caminhoAvatar = "";
+            //se houver imagem
+            if (avatarUpload != null)
+            {
+                if (avatarUpload.ContentType.Contains("image"))
+                {
+                    caminhoAvatar = Path.Combine(Server.MapPath("~/Multimedia/Avatares/"), AvatarName);
+                    avatarUpload.SaveAs(caminhoAvatar);
 
-             
+                }
+
+            }
+            else
+            {
+                AvatarName = "default.png";
+
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    var Utilizador = new User { Name = model.Utilizador.Name, email = model.Email, UName = model.Utilizador.UName, photo="default.jpg"};
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var Utilizador = new User { Name = model.Utilizador.Name, email = model.Email, UName = model.Utilizador.UName, photo = AvatarName, CRTime = DateTime.Now };
                     UserManager.AddToRole(user.Id, "Utilizador");
+                    db.Utilizadores.Add(Utilizador);
+                    db.SaveChanges();
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

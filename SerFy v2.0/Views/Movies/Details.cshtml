@@ -113,7 +113,6 @@
         </div>
     </div>
 
-    @*Falta criar esta merda*@
     <h4>Comments</h4>
     <hr />
     <div style="margin-left:20px;">
@@ -122,10 +121,22 @@
             <div class="row">
 
                 <div class="col-lg-2">
-                    <p>User: @Html.DisplayFor(u => item.User.Name)</p>
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="~/Multimedia/Avatares/@item.User.photo" style="width:40px; height:40px; object-fit:cover" class="img-circle"/>
+
+                            </td>
+                            <td> <p>@Html.DisplayFor(u => item.User.UName)</p></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="col-lg-3">
                     <p>@Html.DisplayFor(u => item.Text)</p>
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <button class="btn btn-danger" onclick="location.href='@Url.Action("Delete","Comments",new { id = item.ID })'"> Delete </button>
+                    }
                 </div>
             </div>
             <hr />
