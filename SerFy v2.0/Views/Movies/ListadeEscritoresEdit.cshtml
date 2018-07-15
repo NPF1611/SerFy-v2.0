@@ -9,28 +9,34 @@
 
         @foreach (var writers in Model.ListAllWriters)
         {
-        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
-            <label>
-                @if (Model.idsWriters.Contains(writers.ID))
-                {
-                    <input type="checkbox" name="@Html.NameFor(c=>c.idsWriters)" checked value="@writers.ID" />
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                <label>
+                    @if (Model.idsWriters.Contains(writers.ID))
+                    {
+                        <input type="checkbox" name="@Html.NameFor(c=>c.idsWriters)" checked value="@writers.ID" />
 
-                }
-                else
-                {
-                    <input type="checkbox" name="@Html.NameFor(c=>c.idsWriters)" value="@writers.ID" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="@Html.NameFor(c=>c.idsWriters)" value="@writers.ID" />
 
-                }
-                @writers.Name
-            </label>
-            <label hidden>
-                <input name="@Html.NameFor(c=>c.idsAllWriters)" value="@writers.ID" />
+                    }
+                    @writers.Name
+                </label>
+                <label hidden>
+                    <input name="@Html.NameFor(c=>c.idsAllWriters)" value="@writers.ID" />
 
-            </label>
-        </div>
+                </label>
+            </div>
         }
     </div>
 
+    <div class="form-group">
+
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-default" name="valueButton" value="3" onclick="location.href='@Url.Action("Create", "Characters")'"> Create a new Writer </button>
+        </div>
+    </div>
 
 
 </div>

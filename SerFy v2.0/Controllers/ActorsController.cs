@@ -39,12 +39,15 @@ namespace SerFy_v2._0.Controllers
         // GET: Actors/Create
         public ActionResult Create()
         {
-
+            //gets the database characters in List format 
             var ch = db.Charas.ToList();
+            //creates a new model to alocate the characters
             var model = new ViewModelCreateActors();
+            //gets the array length
             model.IdsAllCha = new int[db.Charas.Count()];
+            //allocates the Characters List
             model.ListAllCha = ch;
-
+            //retuens the model 
             return View(model);
         }
 
@@ -55,10 +58,11 @@ namespace SerFy_v2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ViewModelCreateActors Actor, HttpPostedFileBase photo, DateTime Date, int valueButton)
         {
+            //adds the list to the param bc this param will be empty
             var p = db.Charas.ToList();
             Actor.ListAllCha = p;
 
-
+            // verify the button value to redirect
             Actor.ListAllCha = db.Charas;
             if (valueButton == 1)
             {
@@ -82,7 +86,7 @@ namespace SerFy_v2._0.Controllers
             var chr = db.Charas.ToList();
             Actor.ListCha = chr;
 
-            //Name verification
+            //Name verification //thas not really necessary tbh
             if (Actor.Name == null)
             {
                 ModelState.AddModelError("", "Name not found");
@@ -90,20 +94,24 @@ namespace SerFy_v2._0.Controllers
 
             }
 
-            //define the photo path
+            //define the photo name
             string photoName = "ActorPhoto" + newID;
+            //will contain the photo Path
             string pathPhoto = "";
 
-
+            //if the photo is null then 
             if (photo == null)
             {
+                //returns the model state
                 ModelState.AddModelError("", "Image not found");
                 return View(Actor);
             }
             else
             {
+                //if the img format is jpg
                 if (photo.ContentType == "image/jpeg")
                 {
+                    //give the photo a name and a Path
                     photoName = photoName + ".jpg";
                     newActor.Photograph = photoName;
                     pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Atores/"), photoName);
@@ -111,8 +119,9 @@ namespace SerFy_v2._0.Controllers
                 }
                 else
                 {
-
-                    ModelState.AddModelError("", "Invalid photo");
+                    //if not the model state will be returned
+                    ModelState.AddModelError("", "Invalid photo type");
+                    return View(Actor);
 
                 }
 
@@ -127,9 +136,13 @@ namespace SerFy_v2._0.Controllers
                 ModelState.AddModelError("", "Invalid Date");
                 return View(Actor);
             }
-            //name and bio attribution
+
+            //name attribution
             newActor.Name = Actor.Name;
+            
+            //MiniBio attribution 
             newActor.Minibio = Actor.Minibio;
+
             //CharacerList Validation/attribution
             if (Actor.IdsCha == null)
             {
@@ -142,13 +155,17 @@ namespace SerFy_v2._0.Controllers
                 ModelState.AddModelError("", "YOU CAN ONLY SELECT ONE CHARACTER");
                 return View(Actor);
             }
-
+            //--Add the characters to the List
+            //charactersAux was created to add values
             var CharacterAux = new List<Characters> { };
             foreach (var charac in Actor.IdsCha)
             {
+                //ch1 is the character object
                 Characters ch1 = db.Charas.Find(charac);
+                //adds the ch1 to the Characters aux variable
                 CharacterAux.Add(ch1);
             }
+            //characterList will receive the characterAux Values
             newActor.CharacterList = CharacterAux;
 
 
@@ -157,6 +174,7 @@ namespace SerFy_v2._0.Controllers
             {
                 db.Actors.Add(newActor);
                 db.SaveChanges();
+                //saves the photo Path
                 photo.SaveAs(pathPhoto);
                 return RedirectToAction("Index");
             }
@@ -171,25 +189,49 @@ namespace SerFy_v2._0.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //actors will be the object to edit
             Actors actors = db.Actors.Find(id);
+            //model is a new model ViewModelEditActors
             var model = new ViewModelEditActors();
+
+            //IdValues allocates the actor ID
             model.IdValue = actors.ID;
+            
+            //Name allocates the actor Name
             model.Name = actors.Name;
+            
+            //Mini Bio allocates the actor MiniBio
             model.Minibio = actors.Minibio;
+
+            //BD allocates the actor BD(Birth Date)
             model.BD = actors.BD;
+
+            //Photograph allocates the actor Photograph
             model.Photograph = actors.Photograph;
+
+            //IdsAllCha length definition 
             model.IdsAllCha = new int[db.Charas.Count()];
+
+            //ListAllCha will contain every Characcter 
             model.ListAllCha = db.Charas.ToList();
 
+            //------Characters that are already selected
+            //var that will go through the Array
             int i = 0;
+
+            //charactersAux is an aux List
             var charactersAux = new List<Characters> { };
+            
+            //IdsCha legth definition
             model.IdsCha = new int[actors.CharacterList.Count()];
+            //each character will be added into the aux Variable
             foreach (var p in actors.CharacterList)
             {
                 model.IdsCha[i] = p.ID;
                 charactersAux.Add(p);
                 i++;
             }
+            // the Characters List will contain the aux values
             model.ListCha = charactersAux;
 
 
@@ -197,6 +239,7 @@ namespace SerFy_v2._0.Controllers
             {
                 return HttpNotFound();
             }
+            //return the model
             return View(model);
         }
 
@@ -210,42 +253,64 @@ namespace SerFy_v2._0.Controllers
             //get the actor
             Actors newActor = db.Actors.Find(actors.IdValue);
 
+            //define List for Model errors
+            actors.ListAllCha = db.Charas.ToList();
+            actors.ListCha = newActor.CharacterList;
+
             //button verification
             if (valueButton == 1)
             {
                 return RedirectToAction("Create", "Characters");
             }
+
             //--photo confirmations
-            //photo name variable
-            string photoName = "";
-            //photo path variable
+                  //define the photo name
+            string photoName = "ActorPhoto" + newActor.ID;
+            //will contain the photo Path
             string pathPhoto = "";
 
-            //photo validations and names
-            if (photo != null)
+            //if the photo is null then 
+            if (photo == null)
             {
-                photoName = "ActorPhoto" + actors.IdValue + ".jpg";
-                pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Atores/"), photoName);
-                System.IO.File.Delete(pathPhoto);
-                actors.Photograph = photoName;
-                photo.SaveAs(pathPhoto);
+                //returns the model state
+                actors.Photograph = oldphoto;
             }
             else
             {
+                //if the img format is jpg
+                if (photo.ContentType == "image/jpeg")
+                {
+                    //give the photo a name and a Path
+                    photoName = "ActorPhoto" + actors.IdValue + ".jpg";
+                    pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Atores/"), photoName);
+                    System.IO.File.Delete(pathPhoto);
+                    actors.Photograph = photoName;
+                    photo.SaveAs(pathPhoto);
 
+                }
+                else
+                {
+                    //if not the model state will be returned
+                    actors.BD = newActor.BD;
+                    ModelState.AddModelError("", "Invalid photo type");
+                    return View(actors);
 
-                actors.Photograph = oldphoto;
+                }
 
             }
 
             //date confirmations
             if (date > DateTime.Now)
             {
+                //if date is above todays date then the error will appear
+                actors.BD = newActor.BD;
                 ModelState.AddModelError("", "Invalid date");
-               
+                return View(actors);
+
             }
             else
             {
+                //if not then the date is valid
                 actors.BD = date;
             }
             //List confirmation
@@ -261,7 +326,7 @@ namespace SerFy_v2._0.Controllers
                     newActor.CharacterList.Remove(charac);
                 }
             }
-            //add data
+            //add the selected character to the CharacterList
             foreach (var ch in actors.IdsCha.ToList())
             {
                 Characters charac = db.Charas.Find(ch);
@@ -277,7 +342,7 @@ namespace SerFy_v2._0.Controllers
             newActor.Minibio = actors.Minibio;
             newActor.Name = actors.Name;
             newActor.Photograph = actors.Photograph;
-           
+
 
             if (ModelState.IsValid)
             {
@@ -308,12 +373,14 @@ namespace SerFy_v2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            //removes the fk connections
             Actors actors = db.Actors.Find(id);
             actors.CharacterList = new List<Characters> { };
             foreach (var ch in actors.CharacterList.ToList())
             {
                 actors.CharacterList.Remove(ch);
             }
+
             db.Actors.Remove(actors);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -14,7 +14,7 @@
                 <h5><b>Create a new Comment: </b></h5>
                 @Html.ValidationSummary(true, " ", new { @class = "text-danger" })
                 <div>
-                    @Html.TextAreaFor(model => model.Text, new { htmlAttributes = new { @class = "" } })
+                    @Html.TextAreaFor(model => model.Text, new { htmlAttributes = new { @placeholder="Write here..." } })
                 </div>
                 <input type="submit" value="Send Review" class="btn-default btn" />
                 @Html.HiddenFor(model => model.MovieFK)

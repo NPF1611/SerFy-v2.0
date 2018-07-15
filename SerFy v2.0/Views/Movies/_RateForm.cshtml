@@ -1,0 +1,39 @@
+﻿@model SerFy_v2._0.Models.Rate
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm("Create", "Rates"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @if (Request.IsAuthenticated)
+        {<div class="form-horizontal">
+                <h5><b>Rate this Movie: </b></h5>
+                @Html.ValidationSummary(true, " ", new { @class = "text-danger" })
+                <div>
+                    <select class="btn btn-default" name="value">
+                        <option hidden selected disabled>selecione o valor</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+
+                    <input hidden type="submit" value="Rate" class="btn-default btn" />
+                </div>
+                @Html.HiddenFor(model => model.MovieFK)
+            </div>
+        }
+
+    </div>
+
+
+
+}
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

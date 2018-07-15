@@ -195,6 +195,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AboutsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorsController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
@@ -202,18 +203,21 @@
     <Compile Include="Controllers\DirectorsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\RatesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\WritersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\About.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actors.cs" />
     <Compile Include="Models\Characters.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Director.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\keyAttribute.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\Rate.cs" />
@@ -254,6 +258,8 @@
     <Content Include="Multimedia\Atores\7.jpg" />
     <Content Include="Multimedia\Atores\8.jpg" />
     <Content Include="Multimedia\Atores\9.jpg" />
+    <Content Include="Multimedia\Avatares\Default.png" />
+    <Content Include="Multimedia\Creator\Me.jpg" />
     <Content Include="Multimedia\Directores\0.jpg" />
     <Content Include="Multimedia\Directores\1.jpg" />
     <Content Include="Multimedia\Directores\2.jpg" />
@@ -384,10 +390,16 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Movies\_RateForm.cshtml" />
+    <Content Include="Views\Rates\Create.cshtml" />
+    <Content Include="Views\Rates\Delete.cshtml" />
+    <Content Include="Views\Rates\Details.cshtml" />
+    <Content Include="Views\Rates\Edit.cshtml" />
+    <Content Include="Views\Rates\Index.cshtml" />
+    <Content Include="Views\Abouts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Multimedia\Avatares\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

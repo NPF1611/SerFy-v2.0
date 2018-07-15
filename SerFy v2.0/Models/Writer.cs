@@ -7,6 +7,7 @@ namespace SerFy_v2._0.Models
     public class Writer
     {
         [Key]
+        //Id value
         public int ID { get; set; }
         [Required]
         public string Name { get; set; }

@@ -54,11 +54,14 @@ namespace SerFy_v2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ViewModelCreateDirector director, HttpPostedFileBase photo, DateTime date, int valueButton)
         {
+            //create a new Director
             var newDir = new Director();
-
+            
+            //give the director the ingo for modelStates
             director.MovieAllFK =new int[db.Movies.Count()];
             director.MovieAllList = db.Movies.ToList();
             
+            //button to redirect 
             if (valueButton == 1)
             {
                 return RedirectToAction("Create", "Movies");
@@ -78,7 +81,7 @@ namespace SerFy_v2._0.Controllers
 
            
 
-            //Name verification
+            //Name verification //not necessary 
             if (director.Name == null)
             {
                 ModelState.AddModelError("", "Name not found");
@@ -86,13 +89,15 @@ namespace SerFy_v2._0.Controllers
 
             }
 
-            //define the photo path
+            //define the photo Name
             string photoName = "DirectorPhoto" + newID;
+            //will have the photo path
             string pathPhoto = "";
 
 
             if (photo == null)
             {
+                //if fot is null then
                 ModelState.AddModelError("", "Image not found");
                 return View(director);
             }
@@ -100,6 +105,7 @@ namespace SerFy_v2._0.Controllers
             {
                 if (photo.ContentType == "image/jpeg")
                 {
+                    //if photo is jpg than save it and « add it to the model 
                     photoName = photoName + ".jpg";
                     newDir.Photograph = photoName;
                     pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Directores/"), photoName);
@@ -107,8 +113,9 @@ namespace SerFy_v2._0.Controllers
                 }
                 else
                 {
-
-                    ModelState.AddModelError("", "Invalid photo");
+                    //if the photo is invalid
+                    ModelState.AddModelError("", "Invalid photo type");
+                    return View(director);
 
                 }
 
@@ -123,18 +130,25 @@ namespace SerFy_v2._0.Controllers
                 ModelState.AddModelError("", "Invalid Date");
                 return View(director);
             }
-            //name and bio attribution
-            newDir.Name = director.Name;
+
+            //name attribution
+            newDir.Name = director.Name; 
+
+            //bio attribution
             newDir.MiniBio = director.MiniBio;
+
             //Movies List  Validation/attribution
             if (director.MovieFK == null)
             {
-                ModelState.AddModelError("", "No Movie selected");
-                return View(director);
+                //director can be created without a Movie
+                director.MovieFK = new int[0];
             }
-            //add a movie
+
+            //----add movies
+            //add an empty List to the model
             newDir.MovieList = new List<Movie> { };
 
+            //each movie selected goes into the Movie Lisst
             foreach (var mov in director.MovieFK.ToList())
             {
                 Movie movie = db.Movies.Find(mov);
@@ -146,6 +160,7 @@ namespace SerFy_v2._0.Controllers
             {
                 db.Directores.Add(newDir);
                 db.SaveChanges();
+                //saves the photo
                 photo.SaveAs(pathPhoto);
                 return RedirectToAction("Index");
             }
@@ -160,33 +175,42 @@ namespace SerFy_v2._0.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //finds the director
             Director director = db.Directores.Find(id);
              if (director == null)
             {
                 return HttpNotFound();
             }
-
+             //creates a new Model
             var newDir = new ViewModelEditDirector();
+            //values definition----
             newDir.IDValue = director.ID;
             newDir.MiniBio = director.MiniBio;
             newDir.Name = director.Name;
             newDir.Photograph = director.Photograph;
             newDir.Place_BD = director.Place_BD;
+            //MovieFk will be the array with all the Movies ids 
             newDir.MovieAllFK = new int[db.Movies.Count()];
+            //MovirAllList List will have the database
             newDir.MovieAllList = db.Movies.ToList();
 
-
+            //i will be an auxiliar int
             int i = 0;
+            //dirAux is an auviliar List<Movie>
             var dirAux = new List<Movie> { };
+            //MovieFK
             newDir.MovieFK = new int[director.MovieList.Count()];
+            //each director will have the selected movies
             foreach (var p in director.MovieList)
             {
                 newDir.MovieFK[i] = p.ID;
                 dirAux.Add(p);
                 i++;
             }
+            //Movie Lis is equals to the auxiliar var
             newDir.MovieList = dirAux;
             
+            //retuins the model
             return View(newDir);
         }
 
@@ -199,6 +223,10 @@ namespace SerFy_v2._0.Controllers
         {
             //get the director
             Director dir = db.Directores.Find(director.IDValue);
+            director.MovieAllList = db.Movies.ToList();
+            director.MovieList = dir.MovieList;
+
+
             
             //button verification
             if (valueButton == 1)
@@ -207,38 +235,67 @@ namespace SerFy_v2._0.Controllers
             }
             //--photo confirmations
             //photo name variable
-            string photoName = "";
+            string photoName = "DirectorPhoto" + dir.ID;
             //photo path variable
             string pathPhoto = "";
             //photo validations and names
-
-
-            if (photo != null)
+            
+            /*This will verify the photo this one needs to be jpg and not null*/
+            if (photo == null)
             {
-                photoName = "ActorPhoto" + director.IDValue + ".jpg";
-                pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Directores/"), photoName);
-                System.IO.File.Delete(pathPhoto);
-                director.Photograph = photoName;
-                photo.SaveAs(pathPhoto);
-            }
-            else
-            {
-
-
+                
                 director.Photograph = oldphoto;
 
             }
+            else
+            {
+                if (photo.ContentType == "image/jpeg")
+                {
+                    photoName = "ActorPhoto" + director.IDValue + ".jpg";
+                    pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Directores/"), photoName);
+                    System.IO.File.Delete(pathPhoto);
+                    director.Photograph = photoName;
+                    photo.SaveAs(pathPhoto);
+
+                }
+                else
+                {
+                    director.Place_BD = dir.Place_BD;
+                    ModelState.AddModelError("", "Invalid photo type");
+                    return View(director);
+                }
+
+            }
+            
 
             //date confirmations
             if (date > DateTime.Now)
             {
+                //if date is invalid
+                director.Place_BD = dir.Place_BD;
                 ModelState.AddModelError("", "Invalid date");
+                return View(director);
             }
             else
             {
+                //if date is valid
                 director.Place_BD = date;
             }
+
             //List confirmation
+            if (director.MovieFK == null)
+            {
+                int i = 0;
+                director.MovieFK = new int[dir.MovieList.Count()];
+                foreach (var mov in dir.MovieList) {
+                    director.MovieFK[i] = mov.ID;
+                    i++;
+                }
+                ModelState.AddModelError("","No Movie Selected");
+                return View(director);
+
+            }
+
             //get and define the Movies
             //------------------Put the ModelState
             foreach (var allmov in director.MovieAllFK)

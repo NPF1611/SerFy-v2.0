@@ -48,5 +48,7 @@ namespace SerFy_v2._0.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<SerFy_v2._0.Models.About> Abouts { get; set; }
     }
 }
