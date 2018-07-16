@@ -36,6 +36,7 @@ namespace SerFy_v2._0.Controllers
             return View(actors);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Actors/Create
         public ActionResult Create()
         {
@@ -56,6 +57,7 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create(ViewModelCreateActors Actor, HttpPostedFileBase photo, DateTime Date, int valueButton)
         {
             //adds the list to the param bc this param will be empty
@@ -139,7 +141,7 @@ namespace SerFy_v2._0.Controllers
 
             //name attribution
             newActor.Name = Actor.Name;
-            
+
             //MiniBio attribution 
             newActor.Minibio = Actor.Minibio;
 
@@ -183,6 +185,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Actors/Edit/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -196,10 +199,10 @@ namespace SerFy_v2._0.Controllers
 
             //IdValues allocates the actor ID
             model.IdValue = actors.ID;
-            
+
             //Name allocates the actor Name
             model.Name = actors.Name;
-            
+
             //Mini Bio allocates the actor MiniBio
             model.Minibio = actors.Minibio;
 
@@ -221,7 +224,7 @@ namespace SerFy_v2._0.Controllers
 
             //charactersAux is an aux List
             var charactersAux = new List<Characters> { };
-            
+
             //IdsCha legth definition
             model.IdsCha = new int[actors.CharacterList.Count()];
             //each character will be added into the aux Variable
@@ -248,6 +251,7 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit(ViewModelEditActors actors, HttpPostedFileBase photo, DateTime date, String oldphoto, int valueButton)
         {
             //get the actor
@@ -264,7 +268,7 @@ namespace SerFy_v2._0.Controllers
             }
 
             //--photo confirmations
-                  //define the photo name
+            //define the photo name
             string photoName = "ActorPhoto" + newActor.ID;
             //will contain the photo Path
             string pathPhoto = "";
@@ -318,23 +322,49 @@ namespace SerFy_v2._0.Controllers
             //get and define the char
             //------------------Put the ModelState
             //remove data
+            List<Characters> old = new List<Characters> { };
+            List<Characters> verify = newActor.CharacterList.ToList();
             foreach (var AllCharacters in actors.IdsAllCha)
             {
                 Characters charac = db.Charas.Find(AllCharacters);
                 if (newActor.CharacterList.Contains(charac))
                 {
+                    old.Add(charac);
                     newActor.CharacterList.Remove(charac);
                 }
             }
             //add the selected character to the CharacterList
+            Actors ActorChange = new Actors();
             foreach (var ch in actors.IdsCha.ToList())
             {
                 Characters charac = db.Charas.Find(ch);
                 if (!newActor.CharacterList.Contains(charac))
                 {
+                    if (charac.actor != null)
+                    {
+                        ActorChange = db.Actors.Find(charac.actor.ID);
+                        if (verify.Count()!=0)
+                        {
+                            ActorChange.CharacterList.Add(old[0]);
+                        }
+                    }
+                    else
+                    {
+                        Characters delete = old.ToList().FirstOrDefault();
+                        if (delete != null)
+                        {
+                            db.Charas.Remove(delete);
+                        }
+                    }
+                    
                     newActor.CharacterList.Add(charac);
+                    
+
                 }
             }
+            
+
+
 
             //ACTORS entries
             newActor.BD = actors.BD;
@@ -354,6 +384,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Actors/Delete/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -371,10 +402,21 @@ namespace SerFy_v2._0.Controllers
         // POST: Actors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult DeleteConfirmed(int id)
         {
             //removes the fk connections
             Actors actors = db.Actors.Find(id);
+            //gets the character
+            Characters chValue = actors.CharacterList.ToList().FirstOrDefault();
+
+            chValue.MoviesList = new List<Movie> { };
+            foreach (var mov in chValue.MoviesList.ToList())
+            {
+                chValue.MoviesList.Remove(mov);
+            }
+
+
             actors.CharacterList = new List<Characters> { };
             foreach (var ch in actors.CharacterList.ToList())
             {
@@ -382,6 +424,8 @@ namespace SerFy_v2._0.Controllers
             }
 
             db.Actors.Remove(actors);
+            //removes the character
+            db.Charas.Remove(chValue);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

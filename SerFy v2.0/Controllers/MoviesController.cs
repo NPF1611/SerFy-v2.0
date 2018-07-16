@@ -56,6 +56,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Movies/Create
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             //variable that will contain the Characters that are into the database
@@ -87,6 +88,7 @@ namespace SerFy_v2._0.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ViewModelCreateFilmePerso movie, HttpPostedFileBase photo, DateTime date, int valueButton)
             {
@@ -329,6 +331,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Movies/Edit/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit(int? id)
         {
             //check if the is null 
@@ -479,6 +482,7 @@ namespace SerFy_v2._0.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(viewModelEditFilme movie, DateTime date, HttpPostedFileBase photo, String oldphoto, int valueButton)
         {
@@ -722,6 +726,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Movies/Delete/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -738,6 +743,7 @@ namespace SerFy_v2._0.Controllers
 
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

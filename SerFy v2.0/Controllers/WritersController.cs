@@ -37,6 +37,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Writers/Create
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             //create a new Model
@@ -53,6 +54,7 @@ namespace SerFy_v2._0.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ViewModelCreateWriter writer, HttpPostedFileBase photo, DateTime date, int valueButton)
         {
@@ -159,6 +161,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Writers/Edit/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -201,6 +204,7 @@ namespace SerFy_v2._0.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ViewModelEditWriter writer, String oldphoto, HttpPostedFileBase photo, DateTime date, int valueButton)
         {
@@ -306,6 +310,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Writers/Delete/5
+         [Authorize(Roles = "Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -321,6 +326,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // POST: Writers/Delete/5
+        [Authorize(Roles = "Administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

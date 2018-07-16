@@ -122,7 +122,7 @@ namespace SerFy_v2._0.Migrations
                                 },
                 new Models.Movie{ ID=4, Name="Dead Men Tell No Tales", dataDePub=new DateTime(2017,5,25), CharactersList= new List<Models.Characters>{Characters[6],Characters[7],Characters[8]},
                                   DirectorList = new List<Models.Director>{ diretores[4],diretores[5] },
-                                   Photograph="3.jpg", Trailer="https://ww w.youtube.com/embed/Hgeu5rhoxxY", Rating=3 , WriterList= new List<Models.Writer>{ writer[6] },sinopse="Captain Jack Sparrow searches for the trident of Poseidon while being pursued by an undead sea captain and his crew."
+                                   Photograph="3.jpg", Trailer="https://www.youtube.com/embed/Hgeu5rhoxxY", Rating=3 , WriterList= new List<Models.Writer>{ writer[6] },sinopse="Captain Jack Sparrow searches for the trident of Poseidon while being pursued by an undead sea captain and his crew."
                                 },
                 new Models.Movie{ ID=5, Name="PI", dataDePub= new DateTime(1998,6,10), CharactersList= new List<Models.Characters>{Characters[9],Characters[10],Characters[11] },
                                   DirectorList = new List<Models.Director>{diretores[6]},

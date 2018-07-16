@@ -10,19 +10,22 @@
         @foreach (var personagem in Model.ListAllcharacters)
         {
             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                @if (personagem.actor != null)
+                {
                 <label>
                     @if (Model.idsCharacters.Contains(personagem.ID))
                     {
-                        <input type="checkbox" name="@Html.NameFor(c=>c.idsCharacters)" checked value="@personagem.ID" />
+                        <input type="checkbox" name="@Html.NameFor(c => c.idsCharacters)" checked value="@personagem.ID" />
 
                     }
                     else
                     {
-                        <input type="checkbox" name="@Html.NameFor(c=>c.idsCharacters)" value="@personagem.ID" />
+                        <input type="checkbox" name="@Html.NameFor(c => c.idsCharacters)" value="@personagem.ID" />
 
                     }
                     @personagem.Name
                 </label>
+                }
                 <label hidden>
                     <input name="@Html.NameFor(c=>c.idsAllCharacters)" value="@personagem.ID" />
 

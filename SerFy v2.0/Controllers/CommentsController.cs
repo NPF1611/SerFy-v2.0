@@ -45,6 +45,7 @@ namespace SerFy_v2._0.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Text,MovieFK")] Comment comment)
         {
@@ -66,6 +67,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Comments/Edit/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,6 +87,7 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit([Bind(Include = "ID,Text")] Comment comment)
         {
             if (ModelState.IsValid)
@@ -97,6 +100,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Comments/Delete/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,6 +117,7 @@ namespace SerFy_v2._0.Controllers
 
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, String confirm)
         {

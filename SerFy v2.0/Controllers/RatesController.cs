@@ -37,6 +37,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Rates/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace SerFy_v2._0.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MovieFK")]Rate rt, int value)
         {
@@ -134,6 +136,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Rates/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -150,6 +153,7 @@ namespace SerFy_v2._0.Controllers
 
         // POST: Rates/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

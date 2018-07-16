@@ -71,7 +71,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back", "Details", new { id = Model.IdValue }, new { @class = "btn btn-default btn-info" })
 </div>
 
 @section Scripts {

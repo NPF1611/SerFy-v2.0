@@ -10,6 +10,7 @@ using SerFy_v2._0.Models;
 
 namespace SerFy_v2._0.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

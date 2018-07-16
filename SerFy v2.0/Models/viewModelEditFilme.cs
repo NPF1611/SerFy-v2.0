@@ -43,26 +43,34 @@ namespace SerFy_v2._0.Models
 
         //Movie Characters List
         [ForeignKey("Characters")]
+        [Display(Name = "Characters")]
         public int[] idsCharacters { get; set; }
+        [Display(Name = "Characters")]
         public IEnumerable<Characters> Listcharacters { get; set; }
 
         //Movie DirectorsList
         [ForeignKey("Directors:")]
+        [Display(Name = "Directors")]
         public int[] idsDirectores { get; set; }
+        [Display(Name = "Directors")]
         public IEnumerable<Director> ListDirectors { get; set; }
 
         //Movie Writers List
         [ForeignKey("Writers:")]
+        [Display(Name = "Writers")]
         public int[] idsWriters { get; set; }
+        [Display(Name = "Writers")]
         public IEnumerable<Writer> ListWriters { get; internal set; }
 
         //Movie Comments List 
         [ForeignKey("Comments")]
+        [Display(Name = "Comments")]
         public int[] idsComments { get; set; }
         public IEnumerable<Comment> ListComments { get; internal set; }
         
         //Movie Rates List 
         [ForeignKey("Rates")]
+        [Display(Name = "Rates")]
         public int[] idsRates { get; set; }
         public IEnumerable<Rate> ListRates { get; internal set; }
 

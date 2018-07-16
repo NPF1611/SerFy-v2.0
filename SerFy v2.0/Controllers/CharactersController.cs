@@ -11,6 +11,7 @@ using SerFy_v2._0.Models;
 
 namespace SerFy_v2._0.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class CharactersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -18,7 +19,7 @@ namespace SerFy_v2._0.Controllers
         // GET: Characters
         public ActionResult Index()
         {
-            return View(db.Charas.ToList());
+            return RedirectToAction("Index", "Movies");
         }
 
         // GET: Characters/Details/5
@@ -37,6 +38,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Characters/Create
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create()
         {
 

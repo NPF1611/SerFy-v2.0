@@ -13,7 +13,7 @@
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger btn-default" />
             <button class="btn btn-default">
-                @Html.ActionLink("I've changed my mind", "Index")
+                @Html.ActionLink("I've changed my mind", "Details", new { id= Model.ID })
             </button>
         </div>
     }

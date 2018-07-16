@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
 <div class="form-horizontal">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <p><b>Info: </b>When a character is selected the old actor will lose the connection and the new actor will be created and will "get" the role</p>
+    <p><b>Info: </b>When a character is selected the old actor will lose the connection and a new connection with the "new" actor will be create.</p>
     <div class="form-group">
         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -65,7 +65,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Actors", "Index","", new { @class = "btn btn-default btn-info" })
 </div>
 
 @section Scripts {
