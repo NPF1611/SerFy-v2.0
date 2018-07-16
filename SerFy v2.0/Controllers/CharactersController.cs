@@ -165,6 +165,16 @@ namespace SerFy_v2._0.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Characters characters = db.Charas.Find(id);
+
+            characters.MoviesList = new List<Movie> { };
+            foreach (var ch in characters.MoviesList.ToList())
+            {
+                characters.MoviesList.Remove(ch);
+            }
+
+            characters.actor = new Actors();
+
+            characters.actor = null;
             db.Charas.Remove(characters);
             db.SaveChanges();
             return RedirectToAction("Index");

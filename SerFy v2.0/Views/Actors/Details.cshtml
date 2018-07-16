@@ -28,7 +28,7 @@
             @foreach (var i in Model.CharacterList)
             {
                 <div style="position: relative; text-align: center; color: black;" data-toggle="modal" data-target="#@i.ID">
-                    <img src="~/Multimedia/Personagens/@i.Photograph" class="img-responsive img-rounded" />
+                    <img width="360" src="~/Multimedia/Personagens/@i.Photograph" class="img-responsive img-rounded" />
                     <p style="position: absolute; bottom: 8px;right: 16px; color:dimgrey">@i.Name</p>
                 </div>
 
@@ -45,6 +45,7 @@
                                 <img width="500" style="object-fit:cover" class="img-rounded" src="~/Multimedia/Personagens/@i.Photograph" />
                             </div>
                             <div class="modal-footer">
+                                <button onclick="location.href='@Url.Action("Delete", "Characters", new { id = i.ID })'" class="btn btn-danger btn-default">Delete</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>

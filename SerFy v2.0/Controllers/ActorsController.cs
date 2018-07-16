@@ -152,11 +152,7 @@ namespace SerFy_v2._0.Controllers
                 return View(Actor);
             }
 
-            if (Actor.IdsCha.Length > 1)
-            {
-                ModelState.AddModelError("", "YOU CAN ONLY SELECT ONE CHARACTER");
-                return View(Actor);
-            }
+
             //--Add the characters to the List
             //charactersAux was created to add values
             var CharacterAux = new List<Characters> { };
@@ -322,48 +318,34 @@ namespace SerFy_v2._0.Controllers
             //get and define the char
             //------------------Put the ModelState
             //remove data
-            List<Characters> old = new List<Characters> { };
-            List<Characters> verify = newActor.CharacterList.ToList();
             foreach (var AllCharacters in actors.IdsAllCha)
             {
                 Characters charac = db.Charas.Find(AllCharacters);
                 if (newActor.CharacterList.Contains(charac))
                 {
-                    old.Add(charac);
                     newActor.CharacterList.Remove(charac);
                 }
             }
             //add the selected character to the CharacterList
-            Actors ActorChange = new Actors();
+
+            if (actors.IdsCha == null)
+            {
+                int i = 0;
+                foreach (var Ch in newActor.CharacterList)
+                {
+                    actors.IdsCha[i] = Ch.ID;
+                }
+
+            }
             foreach (var ch in actors.IdsCha.ToList())
             {
                 Characters charac = db.Charas.Find(ch);
                 if (!newActor.CharacterList.Contains(charac))
                 {
-                    if (charac.actor != null)
-                    {
-                        ActorChange = db.Actors.Find(charac.actor.ID);
-                        if (verify.Count()!=0)
-                        {
-                            ActorChange.CharacterList.Add(old[0]);
-                        }
-                    }
-                    else
-                    {
-                        Characters delete = old.ToList().FirstOrDefault();
-                        if (delete != null)
-                        {
-                            db.Charas.Remove(delete);
-                        }
-                    }
-                    
                     newActor.CharacterList.Add(charac);
-                    
 
                 }
             }
-            
-
 
 
             //ACTORS entries

@@ -8,25 +8,32 @@
     <div class="row">
         @foreach (var charac in Model.ListAllCha)
         {
-            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
-                <label>
-                    @if (Model.IdsCha.Contains(charac.ID))
+           
+                if (Model.IdsCha.Contains(charac.ID))
+                {
+                    <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                        <label>
+                            <input type="checkbox" checked name="@Html.NameFor(c => c.IdsCha)" value="@charac.ID" />
+                            @charac.Name
+                        </label>
+                    </div>
+                }
+                else
+                {
+                    if (charac.actor == null)
                     {
-                        <input type="radio" checked name="@Html.NameFor(c => c.IdsCha)" value="@charac.ID" />
-                        @charac.Name
+                        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6">
+                            <label>
+                                <input type="checkbox" name="@Html.NameFor(c => c.IdsCha)" value="@charac.ID" />
+                                @charac.Name
+                            </label>
+                        </div>
                     }
-                    else
-                    {
-                        <input type="radio"  name="@Html.NameFor(c => c.IdsCha)" value="@charac.ID" />
-                        @charac.Name
+                }
 
-                    }
-                </label>
                 <label hidden>
                     <input name="@Html.NameFor(c => c.IdsAllCha)" value="@charac.ID" />
                 </label>
-
-            </div>
 
         }
 
