@@ -67,13 +67,13 @@ namespace SerFy_v2._0
             user.Email = "admin@gmail.pt";
             string userPWD = "Ipt123.";
             var chkUser = userManager.Create(user, userPWD);
-
+            //SER DER ERRO É DO UNAME E DO USERNAME
             //dados do Admin
-            utilizador.Name ="admin@gmail.pt";
+            utilizador.Name ="Admin";
             utilizador.ID = 300;
-            utilizador.UName = user.UserName;
+            utilizador.UName = "Admin";
             utilizador.email = user.Email;
-            utilizador.photo = "default.jpg";
+            utilizador.photo = "default.png";
             utilizador.CRTime = System.DateTime.Now;
             db.Utilizadores.Add(utilizador);
 
@@ -81,15 +81,15 @@ namespace SerFy_v2._0
             var user2 = new ApplicationUser();
             user2.UserName = "user@gmail.pt";
             user2.Email = "user@gmail.pt";
-            string userPWD2 = "IPT123";
+            string userPWD2 = "Ipt123.";
             var chkUser2 = userManager.Create(user2, userPWD2);
 
             //dados do Utilizador Comum
-            utilizador1.Name = "user@gmail.pt";
+            utilizador1.Name = "User";
             utilizador1.ID = 300;
-            utilizador1.UName = user2.UserName;
+            utilizador1.UName = "User";
             utilizador1.email = user2.Email;
-            utilizador1.photo = "default.jpg";
+            utilizador1.photo = "default.png";
             utilizador1.CRTime = System.DateTime.Now;
             db.Utilizadores.Add(utilizador1);
 

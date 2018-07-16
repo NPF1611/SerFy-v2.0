@@ -9,11 +9,19 @@ namespace SerFy_v2._0.Models
         [Key]
         //Id value
         public int ID { get; set; }
-        [Required]
+        //Name
+        [Required(ErrorMessage ="Name is required")]
         public string Name { get; set; }
+        //Photograph
         public string Photograph { get; set; }
+        //Writer Birth Date
         public DateTime Place_DB { get; set; }
+        //Biography
+        [Required(ErrorMessage = "Biography is required")]
+        [Display(Name= "Biography")]
         public string MiniBio { get; set; }
+        //Movies List
+        [Display(Name="Movies")]
         public virtual ICollection<Movie> MoviesList { get; set; }
     }
 }

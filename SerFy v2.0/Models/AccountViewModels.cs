@@ -5,7 +5,6 @@ namespace SerFy_v2._0.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
@@ -48,12 +47,12 @@ namespace SerFy_v2._0.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Email is required")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Password is required")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -64,12 +63,12 @@ namespace SerFy_v2._0.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Email is required")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Password required")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -80,6 +79,7 @@ namespace SerFy_v2._0.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        //value added 
         public User Utilizador { get; set; }
 
 

@@ -39,9 +39,11 @@ namespace SerFy_v2._0.Controllers
         // GET: Writers/Create
         public ActionResult Create()
         {
-
+            //create a new Model
             var newWriter = new ViewModelCreateWriter();
+            //get the Fks ids
             newWriter.MovieAllFK = new int[db.Movies.Count()];
+            //get the objects
             newWriter.MovieAllList = db.Movies.ToList();
 
             return View(newWriter);
@@ -109,6 +111,7 @@ namespace SerFy_v2._0.Controllers
                 {
 
                     ModelState.AddModelError("", "Invalid photo");
+                    return View(writer);
 
                 }
 
@@ -129,12 +132,12 @@ namespace SerFy_v2._0.Controllers
             //Movies List  Validation/attribution
             if (writer.MovieFK == null)
             {
-                ModelState.AddModelError("", "No Movie selected");
-                return View(writer);
+               //writer can be created without a Movie
+                writer.MovieFK = new int[0];
             }
             //add a movie
             newWriter.MoviesList = new List<Movie> { };
-
+            //each movie selected will be added into the MovieList
             foreach (var mov in writer.MovieFK.ToList())
             {
                 Movie movie = db.Movies.Find(mov);
@@ -147,6 +150,7 @@ namespace SerFy_v2._0.Controllers
             {
                 db.Writers.Add(newWriter);
                 db.SaveChanges();
+                //saves the photo
                 photo.SaveAs(pathPhoto);
                 return RedirectToAction("Index");
             }
@@ -166,16 +170,19 @@ namespace SerFy_v2._0.Controllers
             {
                 return HttpNotFound();
             }
+            //create a new Model
             var newWr = new ViewModelEditWriter();
+            //give the writer calues to the model
             newWr.IDValue = writer.ID;
             newWr.MiniBio = writer.MiniBio;
             newWr.Name = writer.Name;
             newWr.Photograph = writer.Photograph;
             newWr.Place_BD = writer.Place_DB;
+            //give the length and all the Moves database  List
             newWr.MovieAllFK = new int[db.Movies.Count()];
             newWr.MovieAllList = db.Movies.ToList();
 
-
+            //get the defined List values
             int i = 0;
             var WRAux = new List<Movie> { };
             newWr.MovieFK = new int[writer.MoviesList.Count()];
@@ -195,12 +202,14 @@ namespace SerFy_v2._0.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( ViewModelEditWriter writer, String oldphoto, HttpPostedFileBase photo, DateTime date, int valueButton)
+        public ActionResult Edit(ViewModelEditWriter writer, String oldphoto, HttpPostedFileBase photo, DateTime date, int valueButton)
         {
 
             //get the Writer
             Writer wr = db.Writers.Find(writer.IDValue);
-
+            // give the writer values to the model ro Modelstates
+            writer.MovieAllList = db.Movies.ToList();
+            writer.MovieList = wr.MoviesList;
             //button verification
             if (valueButton == 1)
             {
@@ -208,41 +217,62 @@ namespace SerFy_v2._0.Controllers
             }
             //--photo confirmations
             //photo name variable
-            string photoName = "";
+            string photoName = "WriterPhoto" + wr.ID;
             //photo path variable
             string pathPhoto = "";
+          
+
             //photo validations and names
-
-
-            if (photo != null)
+            if (photo == null)
             {
-                photoName = "ActorPhoto" + writer.IDValue + ".jpg";
-                pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Writers/"), photoName);
-                System.IO.File.Delete(pathPhoto);
-                writer.Photograph = photoName;
-                photo.SaveAs(pathPhoto);
+                writer.Photograph = wr.Photograph;
             }
             else
             {
+                if (photo.ContentType == "image/jpeg")
+                {
+                    photoName = photoName + ".jpg";
+                    wr.Photograph = photoName;
+                    pathPhoto = Path.Combine(Server.MapPath("~/Multimedia/Writers/"), photoName);
 
+                }
+                else
+                {
+                    writer.Place_BD= wr.Place_DB;
+                    ModelState.AddModelError("", "Invalid photo");
+                    return View(writer);
 
-                writer.Photograph = oldphoto;
+                }
 
             }
 
             //date confirmations
             if (date > DateTime.Now)
             {
+                writer.Place_BD = wr.Place_DB;
                 ModelState.AddModelError("", "Invalid date");
+                return View(writer);
             }
             else
             {
                 writer.Place_BD = date;
             }
             //List confirmation
-            //get and define the Movies
-            //------------------Put the ModelState
-            foreach (var allmov in writer.MovieAllFK)
+            if (writer.MovieFK == null)
+            {
+                int i = 0;
+                writer.MovieFK = new int[wr.MoviesList.Count()];
+                foreach (var mov in wr.MoviesList)
+                {
+                    writer.MovieFK[i] = mov.ID;
+                    i++;
+                }
+                ModelState.AddModelError("", "No Movie Selected");
+                return View(writer);
+            }
+                //get and define the Movies
+                //------------------Put the ModelState
+                foreach (var allmov in writer.MovieAllFK)
             {
                 Movie m = db.Movies.Find(allmov);
                 if (wr.MoviesList.Contains(m))
@@ -295,7 +325,9 @@ namespace SerFy_v2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            //find the movie
             Writer writer = db.Writers.Find(id);
+            //for each value remove from the list
             writer.MoviesList = new List<Movie> { };
             foreach (var ch in writer.MoviesList.ToList())
             {

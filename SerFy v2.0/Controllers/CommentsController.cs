@@ -48,19 +48,20 @@ namespace SerFy_v2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Text,MovieFK")] Comment comment)
         {
-
+            //gets the user
             var utilizador = db.Utilizadores.Where(u => u.email == User.Identity.Name).FirstOrDefault();
-
+            //adds the userFK
             comment.UserFK = utilizador.ID;
 
 
             if (ModelState.IsValid)
             {
+                //adds the comment
                 db.Comments.Add(comment);
                 db.SaveChanges();
+                //redirects to the movie
                 return RedirectToAction("Details", "Movies", new { id = comment.MovieFK });
             }
-
             return View(comment);
         }
 
@@ -115,8 +116,11 @@ namespace SerFy_v2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, String confirm)
         {
+
             Comment comment = db.Comments.Find(id);
+            //value to redirect
             int idValue = comment.MovieFK;
+
             if (confirm.Equals("Delete"))
             {
 

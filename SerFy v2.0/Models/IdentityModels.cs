@@ -34,6 +34,7 @@ namespace SerFy_v2._0.Models
         public DbSet<Director> Directores { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Rate> Rates { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

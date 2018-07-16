@@ -56,7 +56,7 @@ namespace SerFy_v2._0.Migrations
 
             var actors = new List<Models.Actors>
             {
-                new Models.Actors{ ID=1, Name="Robert Downey Jr.", Photograph="0.jpg", BD= new DateTime(1965,4,4), Minibio="Robert Downey Jr. has evolved into one of the most respected actors in Hollywood. With an amazing list of credits to his name, he has managed to stay new and fresh even after over four decades in the business." },
+                new Models.Actors{ ID=1, Name="Robert Downey", Photograph="0.jpg", BD= new DateTime(1965,4,4), Minibio="Robert Downey Jr. has evolved into one of the most respected actors in Hollywood. With an amazing list of credits to his name, he has managed to stay new and fresh even after over four decades in the business." },
                 new Models.Actors{ ID=2, Name="Chris Hemsworth", Photograph="1.jpg", BD= new DateTime(1983,8,11), Minibio="Chris Hemsworth was born in Melbourne, Australia, to Leonie (van Os), a teacher of English, and Craig Hemsworth, a social-services counselor. " },
                 new Models.Actors{ ID=3, Name="Mark Ruffalo", Photograph="2.jpg", BD= new DateTime(1967,11,22), Minibio="Mark Ruffalo was born in Kenosha, Wisconsin, to Marie Rose (Hebert), a stylist and hairdresser, and Frank Lawrence Ruffalo, a construction painter." },
 
@@ -96,7 +96,7 @@ namespace SerFy_v2._0.Migrations
                 new Models.Characters{ ID=11, Name="Sol Robeson" , Photograph="10.jpg", actor= actors[10] },
                 new Models.Characters{ ID=12, Name="Lenny Meyer" , Photograph="11.jpg", actor= actors[11] },
 
-                new Models.Characters{ ID=13, Name="Steve Rogers, Captain America" , Photograph="11.jpg", actor= actors[12] },
+                new Models.Characters{ ID=13, Name="Steve Rogers, Captain America" , Photograph="12.jpg", actor= actors[12] },
 
 
 

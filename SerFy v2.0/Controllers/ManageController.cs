@@ -66,12 +66,12 @@ namespace SerFy_v2._0.Controllers
 
             var userId = User.Identity.GetUserId();
 
-
+            //gets the id value
             var RealId = db.Utilizadores.Where(u => u.email == User.Identity.Name);
             foreach (var val in RealId) {
                Session["UserRealID"] = val.ID ;
             }
-          
+          //creates an IndexViewModel
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -80,6 +80,7 @@ namespace SerFy_v2._0.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+            //returns the model
             return View(model);
         }
 

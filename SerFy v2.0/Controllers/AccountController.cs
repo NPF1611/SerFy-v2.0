@@ -51,6 +51,7 @@ namespace SerFy_v2._0.Controllers
             private set
             {
                 _userManager = value;
+
             }
         }
 
@@ -153,31 +154,46 @@ namespace SerFy_v2._0.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //defines user id
+            if (db.Users.Count()==0)
+            {
+                model.Utilizador.ID = 1;
+
+            }
+            else { 
+                model.Utilizador.ID = db.Utilizadores.Max(a => a.ID)+1;
+            }
+            //photo Name
             string AvatarName = "Avatar" + model.Utilizador.ID + ".jpg";
-            string caminhoAvatar = "";
-            //se houver imagem
+            //Avatar Name
+            string AvatarWay = "";
+            //if the image exists is valid
             if (avatarUpload != null)
             {
                 if (avatarUpload.ContentType.Contains("image"))
                 {
-                    caminhoAvatar = Path.Combine(Server.MapPath("~/Multimedia/Avatares/"), AvatarName);
-                    avatarUpload.SaveAs(caminhoAvatar);
+                    AvatarWay = Path.Combine(Server.MapPath("~/Multimedia/Avatares/"), AvatarName);
+                    avatarUpload.SaveAs(AvatarWay);
 
                 }
 
             }
             else
             {
+           
                 AvatarName = "default.png";
-
             }
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //creates a new User(Identity user)
+                var user = new ApplicationUser { UserName = model.Email , Email = model.Email };
+                //sees if the User can be added
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
+                    //if the resul is positive then creates a new user gives him a role and add him in the database
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     var Utilizador = new User { Name = model.Utilizador.Name, email = model.Email, UName = model.Utilizador.UName, photo = AvatarName, CRTime = DateTime.Now };
                     UserManager.AddToRole(user.Id, "Utilizador");

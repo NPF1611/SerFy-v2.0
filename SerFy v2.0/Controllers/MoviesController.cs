@@ -89,7 +89,7 @@ namespace SerFy_v2._0.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ViewModelCreateFilmePerso movie, HttpPostedFileBase photo, DateTime date, int valueButton)
-        {
+            {
 
             //-----valueButton  "exception"------
 
@@ -159,6 +159,9 @@ namespace SerFy_v2._0.Controllers
 
             if (photo == null)
             {
+                movie.idsCharacters = new int[0];
+                movie.idsDirectores = new int[0];
+                movie.idsWriters = new int[0];
                 //photo cannot be null if that happens then this error will appear 
                 ModelState.AddModelError("", "Image not found");
                 return View(movie);
@@ -175,6 +178,9 @@ namespace SerFy_v2._0.Controllers
                 }
                 else
                 {
+                    movie.idsCharacters = new int[0];
+                    movie.idsDirectores = new int[0];
+                    movie.idsWriters = new int[0];
                     //rejection of the photo
                     ModelState.AddModelError("", "Invalid photo type");
                     return View(movie);
