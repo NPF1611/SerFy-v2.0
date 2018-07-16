@@ -10,11 +10,11 @@ using SerFy_v2._0.Models;
 
 namespace SerFy_v2._0.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+   
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        [Authorize(Roles = "Administrador")]
         // GET: Users
         public ActionResult Index()
         {
@@ -91,6 +91,7 @@ namespace SerFy_v2._0.Controllers
         }
 
         // GET: Users/Delete/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -108,6 +109,7 @@ namespace SerFy_v2._0.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Utilizadores.Find(id);

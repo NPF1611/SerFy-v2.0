@@ -45,7 +45,10 @@
                                 <img width="500" style="object-fit:cover" class="img-rounded" src="~/Multimedia/Personagens/@i.Photograph" />
                             </div>
                             <div class="modal-footer">
-                                <button onclick="location.href='@Url.Action("Delete", "Characters", new { id = i.ID })'" class="btn btn-danger btn-default">Delete</button>
+                                @if (User.IsInRole("Administrador"))
+                                {
+                                    <button onclick="location.href='@Url.Action("Delete", "Characters", new { id = i.ID })'" class="btn btn-danger btn-default">Delete</button>
+                                }
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -78,7 +81,7 @@
 </div>
 
 <div>
-    @Html.ActionLink("Back", "Index","", new { @class = "btn btn-default btn-info" })
+    @Html.ActionLink("Back", "Index", "", new { @class = "btn btn-default btn-info" })
 </div>
 
 
